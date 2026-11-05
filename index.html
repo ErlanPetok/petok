@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0a0a1a">
+
+    <title>Erlangga Juan Fadilah | Freelance Web Developer</title>
+    <meta name="description" content="Portofolio Erlangga Juan Fadilah — Freelance Web Developer muda dari Bogor, Indonesia.">
+    <meta name="author" content="Erlangga Juan Fadilah">
+    <meta property="og:title" content="Erlangga Juan Fadilah | Freelance Web Developer">
+    <meta property="og:image" content="https://images.hiwaifu.com/redraw/avatar/51/51b65905e1c1a6be2caff1a4e119dfb9.webp">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        html { background-color: #0a0a1a; }
+        html[data-theme="light"] { background-color: #f8fafc; }
+    </style>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root, [data-theme="dark"] {
+            --primary: #ee70db;
+            --primary-dark: #d81dc8;
+            --primary-glow: rgba(238, 112, 219, 0.4);
+            --dark: #e2e8f0;
+            --heading: #ffffff;
+            --light: #0a0a1a;
+            --bg-alt: #0f0f23;
+            --card: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --gray: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --nav-bg: rgba(10, 10, 26, 0.9);
+        }
+        [data-theme="light"] {
+            --primary: #d81dc8;
+            --primary-dark: #b015a5;
+            --primary-glow: rgba(216, 29, 200, 0.3);
+            --dark: #1e293b;
+            --heading: #1e293b;
+            --light: #f8fafc;
+            --bg-alt: #ffffff;
+            --card: #ffffff;
+            --card-border: #e2e8f0;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: transparent;
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: auto;
+            position: relative;
+            isolation: isolate;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-color: var(--light);
+            z-index: -3;
+        }
+
+        .page-content { position: relative; z-index: 1; }
+
+        /* ============================================================
+           CUSTOM CURSOR — hanya tampil jika JS mendeteksi PC
+           (body.pc-mode)
+        ============================================================ */
+        .cursor-dot, .cursor-ring, .cursor-spotlight, .cursor-trail, .cursor-feature-toggle {
+            display: none;
+        }
+        body.pc-mode { cursor: none; }
+        body.pc-mode .cursor-dot, body.pc-mode .cursor-ring,
+        body.pc-mode .cursor-spotlight, body.pc-mode .cursor-trail,
+        body.pc-mode .cursor-feature-toggle { display: block; }
+
+        body.pc-mode .cursor-dot, body.pc-mode .cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+        }
+        body.pc-mode .cursor-dot {
+            width: 8px; height: 8px;
+            background: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+        body.pc-mode .cursor-ring {
+            width: 38px; height: 38px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            transition: width 0.25s, height 0.25s, background 0.25s;
+        }
+        body.pc-mode .cursor-ring.hovered {
+            width: 60px; height: 60px;
+            background: rgba(238, 112, 219, 0.15);
+        }
+        body.pc-mode .cursor-spotlight {
+            position: fixed;
+            top: 0; left: 0;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(238, 112, 219, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+        }
+        body.pc-mode .cursor-trail {
+            position: fixed;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            pointer-events: none;
+            z-index: 9997;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+        body.pc-mode .cursor-feature-toggle {
+            position: fixed;
+            bottom: 90px; right: 30px;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            color: var(--primary);
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            z-index: 9995;
+        }
+        body.pc-mode .cursor-feature-toggle.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        .cursor-highlight { transition: color 0.2s ease, text-shadow 0.2s ease; }
+        .cursor-highlight.cursor-on {
+            color: var(--primary) !important;
+            text-shadow: 0 0 10px var(--primary-glow) !important;
+        }
+        .hero-content h1 span.cursor-highlight.cursor-on {
+            background: linear-gradient(90deg, var(--primary), #60a5fa, var(--primary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p.cursor-highlight.cursor-on { color: var(--heading) !important; }
+        body.pc-mode .cursor-ring.on-text {
+            width: 55px; height: 55px;
+            background: rgba(238, 112, 219, 0.15);
+        }
+        body.pc-mode .cursor-ring.on-image {
+            width: 70px; height: 70px;
+            border-radius: 15px;
+            border-style: dashed;
+        }
+        body.pc-mode .cursor-dot.clicking {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        /* ===== LOADING ===== */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #02020a;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+        #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-rocket {
+            font-size: 4rem;
+            animation: rocketLaunch 2s ease-in-out infinite;
+        }
+        @keyframes rocketLaunch {
+            0%, 100% { transform: translateY(0) rotate(-45deg); }
+            50% { transform: translateY(-15px) rotate(-45deg); }
+        }
+        .loader-text {
+            color: #ee70db;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 6px;
+            font-size: 1rem;
+            animation: pulseText 1.5s ease-in-out infinite;
+        }
+        @keyframes pulseText { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .loader-bar {
+            width: 200px; height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .loader-bar span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #ee70db, #60a5fa);
+            animation: loadBar 1.6s ease forwards;
+        }
+        @keyframes loadBar { to { width: 100%; } }
+
+        /* ===== SCROLL PROGRESS ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary), #60a5fa);
+            z-index: 10001;
+            will-change: width;
+        }
+
+        /* ============================================================
+           LATAR ANGKASA
+        ============================================================ */
+        .space-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at bottom, #1b0a2e 0%, #0a0a1a 50%, #02020a 100%);
+            overflow: hidden;
+            pointer-events: none;
+        }
+        [data-theme="light"] .space-bg { opacity: 0; }
+
+        #particleCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            display: none;
+        }
+        body.pc-mode #particleCanvas { display: block; }
+        [data-theme="light"] #particleCanvas { opacity: 0; }
+
+        .stars, .stars2, .stars3 {
+            position: absolute;
+            inset: 0;
+            background-repeat: repeat;
+        }
+        .stars {
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(2px 2px at 130px 80px, #ffffff, transparent),
+                radial-gradient(1px 1px at 160px 120px, #ffffff, transparent),
+                radial-gradient(1px 1px at 200px 50px, #ffffff, transparent),
+                radial-gradient(2px 2px at 250px 160px, #ffffff, transparent);
+            background-size: 320px 200px;
+        }
+        .stars2 {
+            background-image:
+                radial-gradient(1px 1px at 50px 60px, #ee70db, transparent),
+                radial-gradient(1px 1px at 120px 20px, #60a5fa, transparent),
+                radial-gradient(2px 2px at 180px 140px, #ffffff, transparent);
+            background-size: 350px 220px;
+            opacity: 0.7;
+        }
+        .stars3 {
+            background-image:
+                radial-gradient(1px 1px at 30px 100px, #ffffff, transparent),
+                radial-gradient(1px 1px at 150px 60px, #ffffff, transparent);
+            background-size: 280px 240px;
+            opacity: 0.5;
+        }
+
+        /* Animasi bintang hanya di PC */
+        body.pc-mode .stars { animation: twinkle 4s infinite alternate; }
+        body.pc-mode .stars2 { animation: twinkle 6s infinite alternate-reverse; }
+        body.pc-mode .stars3 { animation: twinkle 8s infinite alternate; }
+        @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        body.pc-mode .space-bg.warping .stars { animation: warp 0.4s linear infinite; }
+        body.pc-mode .space-bg.warping .stars2 { animation: warp 0.5s linear infinite; }
+        @keyframes warp {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.3); opacity: 0.2; }
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            display: none;
+        }
+        body.pc-mode .nebula { display: block; }
+        .nebula-1 { width: 450px; height: 450px; background: #7c3aed; top: -100px; left: -100px; animation: float 25s infinite ease-in-out; }
+        .nebula-2 { width: 350px; height: 350px; background: #ec4899; bottom: -100px; right: -100px; animation: float 30s infinite ease-in-out reverse; }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 20px) scale(1.08); }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: shoot 8s linear infinite;
+            opacity: 0;
+            display: none;
+        }
+        body.pc-mode .shooting-star { display: block; }
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%; right: 0;
+            width: 80px; height: 1px;
+            background: linear-gradient(90deg, transparent, #fff);
+            transform: translateY(-50%);
+        }
+        .shooting-star:nth-child(1) { top: 10%; left: 20%; }
+        .shooting-star:nth-child(2) { top: 40%; left: 60%; animation-delay: 4s; }
+        @keyframes shoot {
+            0% { transform: translate(0,0) rotate(45deg); opacity: 0; }
+            5% { opacity: 1; }
+            30% { transform: translate(250px, 250px) rotate(45deg); opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+        .section {
+            padding: 80px 0;
+            position: relative;
+            background: transparent;
+        }
+        /* content-visibility hanya di PC (bisa glitch di mobile lama) */
+        body.pc-mode .section {
+            contain: layout style;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 600px;
+        }
+
+        .wave-divider {
+            position: relative;
+            height: 60px;
+            overflow: hidden;
+            line-height: 0;
+            margin-top: -1px;
+            margin-bottom: -1px;
+            background: transparent;
+            display: block;
+            z-index: 1;
+        }
+        .wave-divider svg { display: block; width: calc(100% + 1.3px); height: 60px; }
+        .wave-divider .wave-fill { fill: var(--light); }
+        [data-theme="light"] .wave-divider .wave-fill { fill: #ffffff; }
+
+        [data-theme="light"] .about { background: white; }
+        [data-theme="light"] .skills { background: #f8fafc; }
+        [data-theme="light"] .timeline-section { background: white; }
+        [data-theme="light"] .projects { background: white; }
+        [data-theme="light"] .certificates { background: #f8fafc; }
+        [data-theme="light"] .testimonials { background: white; }
+        [data-theme="light"] .stats { background: #f8fafc; }
+
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--heading);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        .section-title p { color: var(--gray); margin-top: 10px; }
+
+        /* ===== NAVBAR ===== */
+        header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--nav-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        body.pc-mode header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--heading);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-monogram {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 900;
+        }
+        body.pc-mode .logo-monogram { animation: pulseGlow 3s ease-in-out infinite; }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px var(--primary-glow); }
+            50% { box-shadow: 0 0 35px var(--primary-glow); }
+        }
+        .logo span { color: var(--primary); }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .nav-links { display: flex; gap: 35px; }
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0;
+            width: 0; height: 2px;
+            background: var(--primary);
+            transition: width 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        .nav-icon-btn {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        .nav-icon-btn:hover { background: var(--primary); color: white; }
+        .lang-toggle { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.75rem; }
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--heading); }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+        }
+        [data-theme="light"] .hero { background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%); }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--heading);
+        }
+        .hero-content h1 span {
+            background: linear-gradient(90deg, var(--primary), #60a5fa, var(--primary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        body.pc-mode .hero-content h1 span { animation: gradientText 5s linear infinite; }
+        @keyframes gradientText {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #22c55e;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
+        body.pc-mode .status-dot { animation: pulseDot 2s ease-in-out infinite; }
+        @keyframes pulseDot { 50% { opacity: 0.5; } }
+
+        .typing-container {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--gray);
+            margin-bottom: 25px;
+            min-height: 1.8em;
+            font-family: 'Orbitron', sans-serif;
+        }
+        #typingText { color: var(--primary); }
+        .cursor-blink {
+            display: inline-block;
+            width: 2px;
+            background: var(--primary);
+            margin-left: 2px;
+            height: 1.1em;
+            vertical-align: middle;
+        }
+        body.pc-mode .cursor-blink { animation: blink 0.8s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .motto {
+            font-style: italic;
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .hero-content p { color: var(--gray); margin-bottom: 35px; max-width: 500px; }
+
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover { background: var(--primary); color: white; }
+        /* Hover effect hanya di PC */
+        body.pc-mode .btn:hover { transform: translateY(-2px); }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .hero-image img {
+            width: 100%;
+            max-width: 380px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            object-fit: cover;
+            border: 6px solid var(--card-border);
+            position: relative;
+            z-index: 2;
+        }
+        [data-theme="light"] .hero-image img { border-color: white; }
+
+        /* Orbit ring hanya PC */
+        body.pc-mode .hero-image::before,
+        body.pc-mode .hero-image::after {
+            content: '';
+            position: absolute;
+            border: 1px dashed var(--primary);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: orbit 20s linear infinite;
+        }
+        body.pc-mode .hero-image::before { width: 420px; height: 420px; }
+        body.pc-mode .hero-image::after { width: 480px; height: 480px; animation-duration: 30s; animation-direction: reverse; opacity: 0.2; }
+        @keyframes orbit { to { transform: rotate(360deg); } }
+
+        /* ===== STATS ===== */
+        .stats { padding: 50px 0; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 25px 20px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            transition: border-color 0.2s;
+        }
+        .stat-item:hover { border-color: var(--primary); }
+        .stat-item i { font-size: 2rem; color: var(--primary); margin-bottom: 12px; }
+        .stat-number {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: var(--heading);
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-number span { color: var(--primary); }
+        .stat-label { font-size: 0.85rem; color: var(--gray); }
+
+        /* ===== ABOUT ===== */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-image { display: flex; justify-content: center; }
+        .about-image img {
+            width: 100%;
+            max-width: 340px;
+            border-radius: 20px;
+            border: 2px solid var(--card-border);
+        }
+        .about-text h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--heading); }
+        .about-text p { color: var(--gray); margin-bottom: 18px; font-size: 0.95rem; }
+        .about-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+        .about-info-item { display: flex; align-items: center; gap: 10px; }
+        .about-info-item i { color: var(--primary); font-size: 1rem; flex-shrink: 0; }
+        .about-info-item span { font-size: 0.85rem; color: var(--gray); }
+        .about-info-item strong { color: var(--heading); }
+
+        .location-link {
+            color: var(--gray);
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s, gap 0.2s;
+            border-bottom: 1px dashed transparent;
+        }
+        .location-link:hover {
+            color: var(--primary);
+            gap: 10px;
+            border-bottom-color: var(--primary);
+        }
+        .location-link .map-icon { font-size: 0.75rem; opacity: 0.6; }
+
+        .fun-facts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+        .fun-fact {
+            padding: 7px 15px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--gray);
+            transition: all 0.2s;
+        }
+        .fun-fact:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* ===== SKILLS ===== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .skill-card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--card-border);
+            transition: border-color 0.2s;
+        }
+        .skill-card:hover { border-color: var(--primary); }
+        .skill-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; }
+        .skill-card h3 { font-size: 1.1rem; margin-bottom: 12px; color: var(--heading); }
+        .skill-bar { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+        .skill-bar span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #60a5fa);
+            border-radius: 4px;
+            width: 0;
+        }
+        body.pc-mode .skill-bar span { transition: width 1s ease; }
+        .skill-percent { font-size: 0.8rem; color: var(--gray); text-align: right; }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 15px 40px;
+            margin-bottom: 20px;
+        }
+        .timeline-item:nth-child(odd) { left: 0; text-align: right; }
+        .timeline-item:nth-child(even) { left: 50%; text-align: left; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--light);
+        }
+        .timeline-item:nth-child(odd)::before { right: -7px; }
+        .timeline-item:nth-child(even)::before { left: -7px; }
+        .timeline-content {
+            background: var(--card);
+            padding: 18px 22px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            transition: border-color 0.2s;
+        }
+        .timeline-content:hover { border-color: var(--primary); }
+        .timeline-date {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .timeline-content h3 { font-size: 1rem; margin-bottom: 4px; color: var(--heading); }
+        .timeline-content h4 { font-size: 0.85rem; color: var(--gray); font-weight: 500; margin-bottom: 8px; }
+        .timeline-content p { font-size: 0.82rem; color: var(--gray); }
+
+        /* ===== PROJECTS ===== */
+        .project-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+        .filter-btn {
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            color: var(--gray);
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .project-card {
+            background: var(--card);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            transition: border-color 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+        .project-card.hidden { display: none; }
+        .project-card:hover { border-color: var(--primary); }
+        body.pc-mode .project-card:hover { transform: translateY(-4px); }
+        .project-image { position: relative; height: 180px; overflow: hidden; }
+        .project-image img { width: 100%; height: 100%; object-fit: cover; }
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(238, 112, 219, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        body.pc-mode .project-card:hover .project-overlay { opacity: 1; }
+        .project-overlay button {
+            font-size: 1.4rem;
+            background: white;
+            color: var(--primary);
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .project-info { padding: 20px; }
+        .project-info span {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .project-info h3 { font-size: 1.05rem; margin: 6px 0 8px; color: var(--heading); }
+        .project-info p { color: var(--gray); font-size: 0.85rem; }
+        body.mobile-device .project-card:active { transform: scale(0.98); }
+
+        /* ===== MODAL ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: var(--bg-alt);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+        .modal.active .modal-content { transform: scale(1); }
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 15px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--card-border);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .modal-close:hover { background: var(--primary); }
+        .modal-img { width: 100%; height: 260px; object-fit: cover; border-radius: 20px 20px 0 0; }
+        .modal-body { padding: 25px; color: var(--dark); }
+        .modal-body > span {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .modal-body h2 { font-size: 1.4rem; color: var(--heading); margin: 8px 0 12px; }
+        .modal-body p { color: var(--gray); margin-bottom: 18px; font-size: 0.9rem; }
+        .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .modal-tags span {
+            padding: 4px 12px;
+            background: rgba(238, 112, 219, 0.15);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            font-size: 0.72rem;
+            color: var(--primary);
+        }
+        .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        /* ===== SERTIFIKAT ===== */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+        }
+        .cert-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .cert-card:hover { border-color: var(--primary); }
+        .cert-img {
+            height: 140px;
+            background: linear-gradient(135deg, #1e1b4b, #4c1d95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: var(--primary);
+        }
+        .cert-body { padding: 18px; }
+        .cert-body h3 { font-size: 0.95rem; color: var(--heading); margin-bottom: 5px; }
+        .cert-body p { font-size: 0.78rem; color: var(--gray); margin-bottom: 10px; }
+        .cert-link {
+            font-size: 0.78rem;
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+        .cert-link:hover { gap: 10px; }
+
+        /* ===== TESTIMONI ===== */
+        .testimonial-slider {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .testimonial-track { display: flex; transition: transform 0.4s ease; }
+        .testimonial-item {
+            min-width: 100%;
+            padding: 35px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            text-align: center;
+        }
+        .testimonial-avatar {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 18px;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+        .testimonial-stars { color: #fbbf24; margin-bottom: 12px; font-size: 0.9rem; }
+        .testimonial-text {
+            font-style: italic;
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+            line-height: 1.7;
+        }
+        .testimonial-author { font-weight: 700; color: var(--heading); margin-bottom: 3px; font-size: 0.95rem; }
+        .testimonial-role { font-size: 0.8rem; color: var(--primary); }
+        .testimonial-nav { display: flex; justify-content: center; gap: 10px; margin-top: 22px; }
+        .testimonial-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--card-border);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .testimonial-dot.active {
+            background: var(--primary);
+            width: 28px;
+            border-radius: 5px;
+        }
+        .testimonial-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .testimonial-arrow:hover { background: var(--primary); color: white; }
+        .testimonial-arrow.prev { left: -5px; }
+        .testimonial-arrow.next { right: -5px; }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            background: linear-gradient(135deg, rgba(15,15,35,0.6) 0%, rgba(10,10,26,0.8) 100%);
+            color: white;
+        }
+        [data-theme="light"] .contact { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .contact .section-title h2 { color: white; }
+        .contact .section-title p { color: #94a3b8; }
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; }
+        .contact-info h3 { font-size: 1.3rem; margin-bottom: 18px; color: white; }
+        .contact-info p { color: #94a3b8; margin-bottom: 25px; font-size: 0.9rem; }
+        .contact-item { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .contact-item i {
+            width: 42px; height: 42px;
+            background: rgba(238,112,219,0.2);
+            color: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .contact-item span { font-size: 0.85rem; color: #cbd5e1; }
+        .copy-btn {
+            margin-left: auto;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #94a3b8;
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+        .copy-btn:hover { color: var(--primary); border-color: var(--primary); }
+
+        .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 11px 20px;
+            background: #25d366;
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .wa-btn:hover { transform: translateY(-2px); }
+
+        .social-links { display: flex; gap: 10px; margin-top: 22px; }
+        .social-links a {
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .social-links a:hover { background: var(--primary); }
+
+        .contact-form { display: flex; flex-direction: column; gap: 14px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: #64748b; }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .form-group textarea { resize: vertical; min-height: 110px; }
+        .form-status {
+            font-size: 0.82rem;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        .form-status.success { display: block; background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(5,5,15,0.8);
+            color: #94a3b8;
+            padding: 25px 0 22px;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            position: relative;
+            z-index: 2;
+        }
+        [data-theme="light"] footer { background: #0f172a; }
+        .footer-content { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .music-widget {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 0.75rem;
+        }
+        .music-equalizer { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+        .music-equalizer span {
+            width: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            height: 8px;
+        }
+        body.pc-mode .music-equalizer span { animation: eq 1s ease-in-out infinite; }
+        .music-equalizer span:nth-child(2) { animation-delay: 0.2s; }
+        .music-equalizer span:nth-child(3) { animation-delay: 0.4s; }
+        .music-equalizer span:nth-child(4) { animation-delay: 0.1s; }
+        @keyframes eq { 0%, 100% { height: 4px; } 50% { height: 14px; } }
+        footer span { color: var(--primary); }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 25px; right: 25px;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 9995;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--primary);
+            color: white;
+            padding: 12px 22px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 100000;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ===== REVEAL ===== */
+        .reveal { opacity: 1; transform: none; }
+        body.pc-mode .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        body.pc-mode .reveal.active { opacity: 1; transform: translateY(0); }
+        body.pc-mode .reveal.fallback { opacity: 1 !important; transform: translateY(0) !important; }
+
+        /* ============================================================
+           RESPONSIF — Layout mobile
+        ============================================================ */
+        @media (max-width: 992px) {
+            .hero .container, .about-content, .contact-wrapper { grid-template-columns: 1fr; gap: 35px; }
+            .hero-image { order: -1; }
+            .hero-content h1 { font-size: 2.3rem; }
+            .about-image { order: -1; }
+        }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute;
+                top: 70px; left: 0;
+                width: 100%;
+                background: var(--nav-bg);
+                flex-direction: column;
+                padding: 15px 0;
+                gap: 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                transform: translateY(-150%);
+                opacity: 0;
+                transition: all 0.3s;
+                pointer-events: none;
+                border-bottom: 1px solid var(--card-border);
+            }
+            .nav-links.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+            .nav-links a { display: block; padding: 12px 22px; }
+            .section { padding: 60px 0; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .typing-container { font-size: 1.05rem; }
+            .section-title h2 { font-size: 1.8rem; }
+            .about-info { grid-template-columns: 1fr; }
+            .nav-right { gap: 8px; }
+            .wave-divider { height: 40px; }
+            .wave-divider svg { height: 40px; }
+            .timeline::before { left: 15px; }
+            .timeline-item { width: 100%; padding-left: 45px; padding-right: 5px; text-align: left !important; left: 0 !important; }
+            .timeline-item::before { left: 8px !important; right: auto !important; }
+            .testimonial-item { padding: 28px 18px; }
+            .testimonial-arrow.prev { left: 5px; }
+            .testimonial-arrow.next { right: 5px; }
+            .project-overlay { display: none; }
+            .stats { padding: 40px 0; }
+            .cursor-blink { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== DETEKSI DEVICE PALING AWAL (blocking, jalan sebelum paint) ===== -->
+<script>
+(function() {
+    // Deteksi device — dijalankan SINKRON sebelum render
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    const isFine = window.matchMedia('(pointer: fine)').matches;
+    const ua = navigator.userAgent.toLowerCase();
+    const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(ua);
+    const isSmall = window.innerWidth < 768;
+    const isLowEnd = navigator.deviceMemory && navigator.deviceMemory < 4;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Keputusan: HP = touch + pointer kasar, ATAU UA mobile, ATAU layar kecil
+    const isMobile = (hasTouch && isCoarse) || isMobileUA || isSmall;
+    const isPC = !isMobile && isFine;
+
+    // Expose global untuk dipakai di seluruh script
+    window.DEVICE = {
+        isMobile,
+        isPC,
+        isLowEnd,
+        isTouch: hasTouch,
+        prefersReduced
+    };
+
+    // Pasang class ke body SEKARANG (sebelum paint) agar tidak flicker
+    document.documentElement.classList.add(isPC ? 'pc-detected' : 'mobile-detected');
+    if (isPC) document.body.classList.add('pc-mode');
+    else document.body.classList.add('mobile-device');
+
+    if (isLowEnd) document.body.classList.add('low-end');
+
+    // Log untuk debug
+    console.log('%c🔍 Device Detection',
+        'background: #ee70db; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold;',
+        {
+            'Mode': isPC ? '🖥️ PC' : '📱 Mobile',
+            'Touch': hasTouch,
+            'Pointer': isCoarse ? 'coarse (finger)' : isFine ? 'fine (mouse)' : 'unknown',
+            'UA Mobile': isMobileUA,
+            'Screen Width': window.innerWidth,
+            'RAM': navigator.deviceMemory ? navigator.deviceMemory + 'GB' : 'unknown',
+            'Low-End': isLowEnd,
+            'Reduced Motion': prefersReduced
+        }
+    );
+})();
+</script>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+    <div class="loader-rocket">🚀</div>
+    <div class="loader-text">ENTERING SPACE</div>
+    <div class="loader-bar"><span></span></div>
+</div>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- LATAR ANGKASA -->
+<div class="space-bg" id="spaceBg">
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+</div>
+<canvas id="particleCanvas"></canvas>
+
+<!-- CUSTOM CURSOR (hanya muncul jika body.pc-mode) -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-spotlight" id="cursorSpotlight"></div>
+<button class="cursor-feature-toggle active" id="cursorFeatureToggle" aria-label="Toggle text highlight">
+    <i class="fas fa-highlighter"></i>
+</button>
+
+<!-- PAGE CONTENT -->
+<div class="page-content">
+
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href="#home" class="logo">
+                <div class="logo-monogram">EH</div>
+                Erlan<span>Hoshi</span>
+            </a>
+            <div class="nav-right">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#skills">Keahlian</a></li>
+                    <li><a href="#timeline">Perjalanan</a></li>
+                    <li><a href="#projects">Proyek</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+                <button class="nav-icon-btn lang-toggle" id="langToggle" aria-label="Ganti bahasa">EN</button>
+                <button class="nav-icon-btn" id="themeToggle" aria-label="Ganti tema">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>Open to Freelance Projects</span>
+            </div>
+            <h1>Halo, Saya <span>Erlangga Juan Fadilah</span></h1>
+            <div class="typing-container">
+                <span id="typingText"></span><span class="cursor-blink"></span>
+            </div>
+            <p class="motto">"Fresh graduate SMA, freelance web developer — building digital experiences from the cosmos 🌌"</p>
+            <p>Saya freelancer web developer muda (19 tahun) dari Bogor. Baru lulus SMA, tapi sudah bikin 10+ website untuk UMKM dan toko online.</p>
+            <div class="btn-group">
+                <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Hubungi Saya</a>
+                <a href="#" id="downloadCv" class="btn btn-outline"><i class="fas fa-download"></i> Unduh CV</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.hiwaifu.com/redraw/avatar/51/51b65905e1c1a6be2caff1a4e119dfb9.webp?image_process=resize,w_640" alt="Foto Profil" loading="eager" decoding="async">
+        </div>
+    </div>
+</section>
+
+<section class="stats reveal">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fas fa-briefcase"></i>
+                <div class="stat-number"><span class="counter" data-target="1">0</span>+</div>
+                <div class="stat-label">Tahun Freelance</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-rocket"></i>
+                <div class="stat-number"><span class="counter" data-target="10">0</span>+</div>
+                <div class="stat-label">Proyek Selesai</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-smile"></i>
+                <div class="stat-number"><span class="counter" data-target="8">0</span>+</div>
+                <div class="stat-label">Klien Puas</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-code"></i>
+                <div class="stat-number"><span class="counter" data-target="6">0</span>+</div>
+                <div class="stat-label">Teknologi</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="wave-divider">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path class="wave-fill" d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"></path></svg>
+</div>
+
+<section class="about section reveal" id="about">
+    <div class="container">
+        <div class="section-title">
+            <h2>Tentang Saya</h2>
+            <p>Kenali lebih dekat siapa saya</p>
+        </div>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjtjBJyjXQgWYNt9izdgEBpu7B8J-BlduPEW_9fznJnQ&s=10" alt="Tentang Saya" loading="lazy" decoding="async">
+            </div>
+            <div class="about-text">
+                <h3>Freelance Web Developer — Fresh Graduate SMA</h3>
+                <p>Halo! Saya Erlangga, 19 tahun, fresh graduate SMA dari Bogor. Sejak lulus tahun 2024, saya memutuskan untuk langsung terjun ke dunia freelance web development. Saya belajar coding secara otodidak.</p>
+                <p>Sampai sekarang, saya sudah mengerjakan 10+ proyek website untuk UMKM, toko online kecil, dan teman-teman yang butuh website portofolio.</p>
+                <div class="about-info">
+                    <div class="about-info-item"><i class="fas fa-user"></i><span><strong>Nama:</strong> Erlangga Juan Fadilah</span></div>
+                    <div class="about-info-item"><i class="fas fa-birthday-cake"></i><span><strong>Usia:</strong> 19 tahun</span></div>
+                    <div class="about-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>
+                            <strong>Lokasi:</strong>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Bogor%2C+Indonesia"
+                               target="_blank" rel="noopener noreferrer"
+                               class="location-link">
+                                Bogor, Indonesia <i class="fas fa-external-link-alt map-icon"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="about-info-item"><i class="fas fa-graduation-cap"></i><span><strong>Pendidikan:</strong> SMA (2024)</span></div>
+                    <div class="about-info-item"><i class="fas fa-envelope"></i><span><strong>Email:</strong> erlanggajuanfadilah10@gmail.com</span></div>
+                    <div class="about-info-item"><i class="fas fa-briefcase"></i><span><strong>Freelance:</strong> Tersedia</span></div>
+                </div>
+                <div class="fun-facts">
+                    <div class="fun-fact">☕ 999+ kopi</div>
+                    <div class="fun-fact">🎮 Gamer</div>
+                    <div class="fun-fact">📚 Self-taught</div>
+                    <div class="fun-fact">🌙 Night owl</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="skills section reveal" id="skills">
+    <div class="container">
+        <div class="section-title">
+            <h2>Keahlian</h2>
+            <p>Teknologi yang saya kuasai</p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card"><i class="fab fa-html5"></i><h3>HTML & CSS</h3><div class="skill-bar"><span data-width="90%"></span></div><div class="skill-percent">90%</div></div>
+            <div class="skill-card"><i class="fab fa-js"></i><h3>JavaScript</h3><div class="skill-bar"><span data-width="80%"></span></div><div class="skill-percent">80%</div></div>
+            <div class="skill-card"><i class="fab fa-react"></i><h3>React JS</h3><div class="skill-bar"><span data-width="70%"></span></div><div class="skill-percent">70%</div></div>
+            <div class="skill-card"><i class="fab fa-node-js"></i><h3>Node JS</h3><div class="skill-bar"><span data-width="65%"></span></div><div class="skill-percent">65%</div></div>
+            <div class="skill-card"><i class="fas fa-database"></i><h3>Database</h3><div class="skill-bar"><span data-width="70%"></span></div><div class="skill-percent">70%</div></div>
+            <div class="skill-card"><i class="fab fa-figma"></i><h3>UI Design</h3><div class="skill-bar"><span data-width="75%"></span></div><div class="skill-percent">75%</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="timeline-section section reveal" id="timeline">
+    <div class="container">
+        <div class="section-title">
+            <h2>Perjalanan Saya</h2>
+            <p>Pendidikan, karir, dan pencapaian</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025 - Sekarang</div>
+                    <h3>Freelance Web Developer</h3>
+                    <h4>Self-employed · Bogor</h4>
+                    <p>Fokus mengerjakan website untuk UMKM, toko online, dan portofolio pribadi.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024</div>
+                    <h3>Mulai Belajar Web Development</h3>
+                    <h4>Otodidak · Online</h4>
+                    <p>Belajar HTML, CSS, JavaScript dari YouTube, freeCodeCamp, dan Dicoding.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2021 - 2024</div>
+                    <h3>SMA (Jurusan IPS)</h3>
+                    <h4>SMA Negeri di Bogor</h4>
+                    <p>Aktif di ekstrakurikuler komputer. Mulai kenal coding di kelas 11.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2005</div>
+                    <h3>Lahir</h3>
+                    <h4>Bogor, Indonesia</h4>
+                    <p>Lahir dan besar di Bogor. Sekarang 19 tahun, siap berkarya.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="wave-divider">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path class="wave-fill" d="M0,20 C360,60 720,0 1080,40 C1260,60 1380,30 1440,20 L1440,80 L0,80 Z"></path></svg>
+</div>
+
+<section class="projects section reveal" id="projects">
+    <div class="container">
+        <div class="section-title">
+            <h2>Proyek Saya</h2>
+            <p>Beberapa proyek yang telah saya kerjakan</p>
+        </div>
+        <div class="project-filter">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="web-design">Web Design</button>
+            <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+            <button class="filter-btn" data-filter="dashboard">Dashboard</button>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card" data-category="web-design"
+                 data-title="Website Toko Roti Lokal"
+                 data-desc="Website company profile untuk toko roti lokal di Bogor. HTML, CSS, JavaScript murni. Fitur: galeri produk, form pesanan via WhatsApp."
+                 data-tags="HTML,CSS,JavaScript,Responsive"
+                 data-img="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
+                 data-demo="https://example.com" data-github="https://github.com/ErlanPetok">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="Toko Roti" loading="lazy" decoding="async">
+                    <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="project-info">
+                    <span>Web Design</span>
+                    <h3>Website Toko Roti Lokal</h3>
+                    <p>Website company profile toko roti dengan galeri produk dan form pesanan WhatsApp.</p>
+                </div>
+            </div>
+            <div class="project-card" data-category="ecommerce"
+                 data-title="Toko Online Baju Preloved"
+                 data-desc="Website e-commerce sederhana untuk toko baju preloved. Fitur: katalog produk, keranjang belanja (localStorage), checkout via WhatsApp."
+                 data-tags="HTML,CSS,JavaScript,LocalStorage"
+                 data-img="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop"
+                 data-demo="https://example.com" data-github="https://github.com/ErlanPetok">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="Toko Online" loading="lazy" decoding="async">
+                    <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="project-info">
+                    <span>E-Commerce</span>
+                    <h3>Toko Online Baju Preloved</h3>
+                    <p>E-commerce sederhana dengan keranjang belanja dan checkout via WhatsApp.</p>
+                </div>
+            </div>
+            <div class="project-card" data-category="dashboard"
+                 data-title="Dashboard Keuangan Pribadi"
+                 data-desc="Aplikasi pencatat keuangan pribadi. Fitur: input pemasukan/pengeluaran, grafik bulanan pakai Chart.js, dan penyimpanan data di localStorage."
+                 data-tags="HTML,JavaScript,Chart.js,LocalStorage"
+                 data-img="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+                 data-demo="https://example.com" data-github="https://github.com/ErlanPetok">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="Dashboard" loading="lazy" decoding="async">
+                    <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="project-info">
+                    <span>Dashboard</span>
+                    <h3>Dashboard Keuangan Pribadi</h3>
+                    <p>Aplikasi pencatat keuangan dengan grafik Chart.js dan localStorage.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="certificates section reveal" id="certificates">
+    <div class="container">
+        <div class="section-title">
+            <h2>Sertifikat & Pencapaian</h2>
+            <p>Kredensial yang telah saya raih</p>
+        </div>
+        <div class="cert-grid">
+            <div class="cert-card">
+                <div class="cert-img"><i class="fab fa-html5"></i></div>
+                <div class="cert-body">
+                    <h3>Belajar Dasar Web</h3>
+                    <p>Dicoding · 2024</p>
+                    <a href="#" class="cert-link">Verifikasi <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img"><i class="fab fa-js"></i></div>
+                <div class="cert-body">
+                    <h3>JavaScript Dasar</h3>
+                    <p>freeCodeCamp · 2024</p>
+                    <a href="#" class="cert-link">Verifikasi <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img"><i class="fab fa-react"></i></div>
+                <div class="cert-body">
+                    <h3>React Fundamental</h3>
+                    <p>Dicoding · 2025</p>
+                    <a href="#" class="cert-link">Verifikasi <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img"><i class="fas fa-award"></i></div>
+                <div class="cert-body">
+                    <h3>Top 10 Lomba Web Design</h3>
+                    <p>Tingkat Kota Bogor · 2023</p>
+                    <a href="#" class="cert-link">Lihat <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials section reveal" id="testimonials">
+    <div class="container">
+        <div class="section-title">
+            <h2>Testimoni Klien</h2>
+            <p>Apa kata mereka tentang saya</p>
+        </div>
+        <div class="testimonial-slider">
+            <button class="testimonial-arrow prev" id="testiPrev"><i class="fas fa-chevron-left"></i></button>
+            <button class="testimonial-arrow next" id="testiNext"><i class="fas fa-chevron-right"></i></button>
+            <div class="testimonial-track" id="testiTrack">
+                <div class="testimonial-item">
+                    <img src="https://i.pravatar.cc/150?img=12" alt="Client" class="testimonial-avatar" loading="lazy" decoding="async">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Meskipun masih muda, hasil kerjanya rapi dan cepat. Website toko roti saya jadi lebih modern!"</p>
+                    <div class="testimonial-author">Pak Budi</div>
+                    <div class="testimonial-role">Pemilik Toko Roti, Bogor</div>
+                </div>
+                <div class="testimonial-item">
+                    <img src="https://i.pravatar.cc/150?img=32" alt="Client" class="testimonial-avatar" loading="lazy" decoding="async">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Awalnya ragu karena Erlan masih muda, tapi ternyata komunikasinya enak dan hasilnya memuaskan."</p>
+                    <div class="testimonial-author">Mbak Siti</div>
+                    <div class="testimonial-role">Owner Preloved Shop, Jakarta</div>
+                </div>
+                <div class="testimonial-item">
+                    <img src="https://i.pravatar.cc/150?img=45" alt="Client" class="testimonial-avatar" loading="lazy" decoding="async">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Erlan bikin website portofolio untuk saya, hasilnya keren dan cepat selesai. Sukses terus!"</p>
+                    <div class="testimonial-author">Rian</div>
+                    <div class="testimonial-role">Fotografer Freelance, Bogor</div>
+                </div>
+            </div>
+            <div class="testimonial-nav" id="testiNav"></div>
+        </div>
+    </div>
+</section>
+
+<section class="contact section reveal" id="contact">
+    <div class="container">
+        <div class="section-title">
+            <h2>Hubungi Saya</h2>
+            <p>Mari berkolaborasi untuk proyek Anda</p>
+        </div>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Mari Bicara</h3>
+                <p>Punya ide proyek atau ingin bekerja sama? Saya fast response di WhatsApp!</p>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>erlanggajuanfadilah10@gmail.com</span>
+                    <button class="copy-btn" data-copy="erlanggajuanfadilah10@gmail.com" title="Copy email"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+62 858 8236 2126</span>
+                    <button class="copy-btn" data-copy="+6285882362126" title="Copy nomor"><i class="fas fa-copy"></i></button>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Bogor%2C+Indonesia"
+                       target="_blank" rel="noopener noreferrer"
+                       class="location-link" style="color: #cbd5e1; font-size: 0.85rem;">
+                        Bogor, Indonesia <i class="fas fa-external-link-alt map-icon"></i>
+                    </a>
+                </div>
+
+                <a href="https://wa.me/6285882362126?text=Halo%20Erlangga%2C%20saya%20tertarik%20bekerja%20sama%20untuk%20proyek%20website." target="_blank" class="wa-btn">
+                    <i class="fab fa-whatsapp" style="font-size:1.1rem"></i> Chat via WhatsApp
+                </a>
+
+                <div class="social-links">
+                    <a href="https://github.com/ErlanPetok" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Nama Lengkap" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email Anda" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="subject" placeholder="Subjek">
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Tulis pesan Anda..." required></textarea>
+                </div>
+                <div class="form-status" id="formStatus"></div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim Pesan</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="music-widget">
+                <div class="music-equalizer"><span></span><span></span><span></span><span></span></div>
+                <span>Now Playing: Lo-fi Space Beats 🌌</span>
+            </div>
+            <div>&copy; 2025 <span>ErlanHoshi</span>. All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+</div><!-- /page-content -->
+
+<button class="back-to-top" id="backToTop" aria-label="Kembali ke atas"><i class="fas fa-arrow-up"></i></button>
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="projectModal">
+    <div class="modal-content">
+        <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+        <img id="modalImg" class="modal-img" src="" alt="" loading="lazy">
+        <div class="modal-body">
+            <span id="modalCategory">Category</span>
+            <h2 id="modalTitle">Title</h2>
+            <p id="modalDesc">Description</p>
+            <div class="modal-tags" id="modalTags"></div>
+            <div class="modal-actions">
+                <a href="#" id="modalDemo" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                <a href="#" id="modalGithub" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ============================================================
+   AMBIL DETEKSI DARI HEAD (sudah jalan sebelum paint)
+============================================================ */
+const { isMobile, isPC, isLowEnd, isTouch, prefersReduced } = window.DEVICE;
+
+console.log('%c🚀 Initializing ' + (isPC ? 'DESKTOP' : 'MOBILE') + ' features',
+    'background: #60a5fa; color: white; padding: 4px 8px; border-radius: 4px;');
+
+/* ============================================================
+   FUNGSI-FUNGSI UMUM (dipakai di kedua mode)
+============================================================ */
+
+// Loading screen
+window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('hidden'), 900);
+});
+setTimeout(() => {
+    const loader = document.getElementById('loader');
+    if (loader && !loader.classList.contains('hidden')) loader.classList.add('hidden');
+}, 2500);
+
+// Theme toggle
+const htmlEl = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('i');
+let savedTheme = localStorage.getItem('theme') || 'dark';
+localStorage.setItem('theme', savedTheme);
+function setTheme(theme) {
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+}
+setTheme(savedTheme);
+themeToggle.addEventListener('click', () => {
+    setTheme(htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// Menu mobile
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    const icon = menuToggle.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+});
+navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
+    });
+});
+
+// Scroll progress + back-to-top + active nav — throttled
+const scrollProgress = document.getElementById('scrollProgress');
+const backToTop = document.getElementById('backToTop');
+const sections = document.querySelectorAll('section[id]');
+const navLinksAll = document.querySelectorAll('.nav-links a');
+const headerEl = document.querySelector('header');
+
+let scrollTicking = false;
+window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        scrollProgress.style.width = (scrollTop / docHeight * 100) + '%';
+        backToTop.classList.toggle('visible', scrollTop > 400);
+        headerEl.style.boxShadow = scrollTop > 50 ? '0 4px 20px rgba(0,0,0,0.3)' : '0 2px 10px rgba(0,0,0,0.1)';
+
+        let current = '';
+        sections.forEach(sec => {
+            if (scrollTop >= sec.offsetTop - 150) current = sec.id;
+        });
+        navLinksAll.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+        scrollTicking = false;
+    });
+}, { passive: true });
+
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Copy + toast
+const toast = document.getElementById('toast');
+function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}
+document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(btn.dataset.copy)
+            .then(() => showToast('✓ Berhasil dicopy!'))
+            .catch(() => showToast('Gagal copy'));
+    });
+});
+
+// Filter proyek
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        projectCards.forEach(card => {
+            card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter);
+        });
+    });
+});
+
+// Modal proyek
+const modal = document.getElementById('projectModal');
+const modalClose = document.getElementById('modalClose');
+function openModal(card) {
+    document.getElementById('modalImg').src = card.dataset.img;
+    document.getElementById('modalTitle').textContent = card.dataset.title;
+    document.getElementById('modalDesc').textContent = card.dataset.desc;
+    document.getElementById('modalCategory').textContent = card.querySelector('.project-info span').textContent;
+    document.getElementById('modalDemo').href = card.dataset.demo;
+    document.getElementById('modalGithub').href = card.dataset.github;
+    const tagsContainer = document.getElementById('modalTags');
+    tagsContainer.innerHTML = '';
+    card.dataset.tags.split(',').forEach(tag => {
+        const span = document.createElement('span');
+        span.textContent = tag.trim();
+        tagsContainer.appendChild(span);
+    });
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+// PC: tombol mata | Mobile: klik card langsung
+if (isPC) {
+    document.querySelectorAll('.open-modal').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openModal(btn.closest('.project-card'));
+        });
+    });
+} else {
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => openModal(card));
+    });
+}
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// Testimoni slider
+const testiTrack = document.getElementById('testiTrack');
+const testiItems = testiTrack.querySelectorAll('.testimonial-item');
+const testiNav = document.getElementById('testiNav');
+let testiIdx = 0;
+testiItems.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTesti(i));
+    testiNav.appendChild(dot);
+});
+function goTesti(idx) {
+    testiIdx = (idx + testiItems.length) % testiItems.length;
+    testiTrack.style.transform = `translateX(-${testiIdx * 100}%)`;
+    document.querySelectorAll('.testimonial-dot').forEach((d, i) => d.classList.toggle('active', i === testiIdx));
+}
+document.getElementById('testiPrev').addEventListener('click', () => goTesti(testiIdx - 1));
+document.getElementById('testiNext').addEventListener('click', () => goTesti(testiIdx + 1));
+
+// Autoplay testimoni HANYA di PC
+if (isPC) {
+    let testiTimer = setInterval(() => goTesti(testiIdx + 1), 6000);
+    document.addEventListener('visibilitychange', () => {
+        clearInterval(testiTimer);
+        if (!document.hidden) testiTimer = setInterval(() => goTesti(testiIdx + 1), 6000);
+    });
+}
+
+// Form kontak
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+    btn.disabled = true;
+    setTimeout(() => {
+        formStatus.className = 'form-status success';
+        formStatus.textContent = '✓ Pesan terkirim! (Demo)';
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+        contactForm.reset();
+        setTimeout(() => formStatus.className = 'form-status', 4000);
+    }, 1200);
+});
+
+// Download CV
+document.getElementById('downloadCv').addEventListener('click', (e) => {
+    e.preventDefault();
+    showToast('📄 CV akan segera diunduh...');
+});
+
+// Counter — animasi hanya di PC
+const counterEls = document.querySelectorAll('.counter');
+if (isPC && 'IntersectionObserver' in window) {
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = +el.dataset.target;
+                let count = 0;
+                const step = Math.max(1, Math.ceil(target / 30));
+                const timer = setInterval(() => {
+                    count += step;
+                    if (count >= target) { count = target; clearInterval(timer); }
+                    el.textContent = count;
+                }, 40);
+                counterObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+    counterEls.forEach(c => counterObserver.observe(c));
+} else {
+    // Mobile: langsung tampil angka
+    counterEls.forEach(c => { c.textContent = c.dataset.target; });
+}
+
+// Skill bar — animasi hanya PC
+const skillBars = document.querySelectorAll('.skill-bar span');
+if (isPC && 'IntersectionObserver' in window) {
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.width = entry.target.dataset.width;
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    skillBars.forEach(bar => skillObserver.observe(bar));
+} else {
+    // Mobile: langsung set
+    skillBars.forEach(bar => { bar.style.width = bar.dataset.width; });
+}
+
+// Reveal — animasi hanya PC
+if (isPC && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (!el.classList.contains('active')) el.classList.add('fallback');
+        });
+    }, 1500);
+} else {
+    // Mobile: langsung tampil semua
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+}
+
+// Language toggle (sederhana)
+const langToggle = document.getElementById('langToggle');
+let currentLang = localStorage.getItem('lang') || 'id';
+langToggle.textContent = currentLang === 'id' ? 'EN' : 'ID';
+langToggle.addEventListener('click', () => {
+    currentLang = currentLang === 'id' ? 'en' : 'id';
+    localStorage.setItem('lang', currentLang);
+    langToggle.textContent = currentLang === 'id' ? 'EN' : 'ID';
+    showToast(currentLang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
+});
+
+/* ============================================================
+   ============= FITUR KHUSUS PC =============
+   Tidak dijalankan sama sekali di HP
+============================================================ */
+if (isPC && !prefersReduced) {
+    console.log('%c✨ PC mode: custom cursor + particle + typing + warp',
+        'background: #ee70db; color: white; padding: 4px 8px; border-radius: 4px;');
+
+    // --- CUSTOM CURSOR ---
+    const cursorDot = document.getElementById('cursorDot');
+    const cursorRing = document.getElementById('cursorRing');
+    const cursorSpotlight = document.getElementById('cursorSpotlight');
+    const cursorFeatureToggle = document.getElementById('cursorFeatureToggle');
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0, spotX = 0, spotY = 0;
+    let highlightEnabled = localStorage.getItem('cursorHighlight') !== 'off';
+
+    // Trail dots
+    const trailDots = [];
+    for (let i = 0; i < 4; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail';
+        dot.style.opacity = (0.4 - i * 0.08);
+        document.body.appendChild(dot);
+        trailDots.push({ el: dot, x: 0, y: 0 });
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+    }, { passive: true });
+
+    function animateCursor() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        cursorRing.style.left = ringX + 'px';
+        cursorRing.style.top = ringY + 'px';
+        spotX += (mouseX - spotX) * 0.1;
+        spotY += (mouseY - spotY) * 0.1;
+        cursorSpotlight.style.left = spotX + 'px';
+        cursorSpotlight.style.top = spotY + 'px';
+        let prevX = mouseX, prevY = mouseY;
+        trailDots.forEach((dot) => {
+            dot.x += (prevX - dot.x) * 0.35;
+            dot.y += (prevY - dot.y) * 0.35;
+            dot.el.style.left = dot.x + 'px';
+            dot.el.style.top = dot.y + 'px';
+            prevX = dot.x;
+            prevY = dot.y;
+        });
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.addEventListener('mousedown', () => cursorDot.classList.add('clicking'));
+    document.addEventListener('mouseup', () => cursorDot.classList.remove('clicking'));
+
+    document.querySelectorAll('a, button, .project-card, .skill-card, input, textarea, .filter-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('hovered'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovered'));
+    });
+    document.querySelectorAll('img, .hero-image, .about-image, .project-image').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('on-image'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('on-image'));
+    });
+
+    // Text highlight
+    document.querySelectorAll('h1, h2, h3, h4, .hero-content h1 span, .motto, .about-text p, .section-title h2, .stat-number, .logo, .testimonial-author, .testimonial-text').forEach(el => {
+        if (!el.querySelector('div, p, ul, section')) el.classList.add('cursor-highlight');
+    });
+
+    function checkTextHover() {
+        if (!highlightEnabled) {
+            document.querySelectorAll('.cursor-highlight.cursor-on').forEach(el => el.classList.remove('cursor-on'));
+            cursorRing.classList.remove('on-text');
+            return;
+        }
+        const el = document.elementFromPoint(mouseX, mouseY);
+        if (!el) return;
+        const target = el.closest('.cursor-highlight');
+        document.querySelectorAll('.cursor-highlight.cursor-on').forEach(item => {
+            if (item !== target) item.classList.remove('cursor-on');
+        });
+        if (target) {
+            target.classList.add('cursor-on');
+            cursorRing.classList.add('on-text');
+        } else {
+            cursorRing.classList.remove('on-text');
+        }
+    }
+    let lastCheck = 0;
+    function textHoverLoop(now) {
+        if (now - lastCheck > 50) {
+            checkTextHover();
+            lastCheck = now;
+        }
+        requestAnimationFrame(textHoverLoop);
+    }
+    requestAnimationFrame(textHoverLoop);
+
+    cursorFeatureToggle.addEventListener('click', () => {
+        highlightEnabled = !highlightEnabled;
+        localStorage.setItem('cursorHighlight', highlightEnabled ? 'on' : 'off');
+        cursorFeatureToggle.classList.toggle('active', highlightEnabled);
+        if (!highlightEnabled) {
+            document.querySelectorAll('.cursor-highlight.cursor-on').forEach(el => el.classList.remove('cursor-on'));
+            cursorRing.classList.remove('on-text');
+        }
+    });
+    if (!highlightEnabled) cursorFeatureToggle.classList.remove('active');
+
+    // --- PARTICLE CANVAS ---
+    if (!isLowEnd) {
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let canvasW, canvasH;
+        let particleActive = true;
+
+        function resizeCanvas() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            canvasW = window.innerWidth;
+            canvasH = window.innerHeight;
+            canvas.width = canvasW * dpr;
+            canvas.height = canvasH * dpr;
+            canvas.style.width = canvasW + 'px';
+            canvas.style.height = canvasH + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resizeCanvas();
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resizeCanvas, 200);
+        }, { passive: true });
+
+        for (let i = 0; i < 30; i++) {
+            particles.push({
+                x: Math.random() * canvasW,
+                y: Math.random() * canvasH,
+                baseX: Math.random() * canvasW,
+                baseY: Math.random() * canvasH,
+                size: Math.random() * 1.5 + 0.8,
+                color: Math.random() > 0.5 ? '#ee70db' : '#ffffff'
+            });
+        }
+
+        let lastFrame = 0;
+        function drawParticles(now) {
+            if (now - lastFrame < 33) {
+                requestAnimationFrame(drawParticles);
+                return;
+            }
+            lastFrame = now;
+            if (!particleActive) {
+                requestAnimationFrame(drawParticles);
+                return;
+            }
+            ctx.clearRect(0, 0, canvasW, canvasH);
+            particles.forEach(p => {
+                const dx = p.x - mouseX;
+                const dy = p.y - mouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 100 && dist > 0) {
+                    const force = (100 - dist) / 100;
+                    p.x += (dx / dist) * force * 2;
+                    p.y += (dy / dist) * force * 2;
+                } else {
+                    p.x += (p.baseX - p.x) * 0.02;
+                    p.y += (p.baseY - p.y) * 0.02;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.6;
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(drawParticles);
+        }
+        requestAnimationFrame(drawParticles);
+
+        document.addEventListener('visibilitychange', () => {
+            particleActive = !document.hidden;
+        });
+    }
+
+    // --- TYPING EFFECT (char-by-char) ---
+    const typingRoles = ['Freelance Web Developer', 'Frontend Enthusiast', 'UI Designer Pemula', 'Problem Solver'];
+    const typingEl = document.getElementById('typingText');
+    let roleIdx = 0, charIdx = 0, isDeleting = false;
+    function typeEffect() {
+        const current = typingRoles[roleIdx];
+        if (isDeleting) {
+            typingEl.textContent = current.substring(0, charIdx - 1);
+            charIdx--;
+        } else {
+            typingEl.textContent = current.substring(0, charIdx + 1);
+            charIdx++;
+        }
+        let delay = isDeleting ? 40 : 80;
+        if (!isDeleting && charIdx === current.length) {
+            delay = 1800;
+            isDeleting = true;
+        } else if (isDeleting && charIdx === 0) {
+            isDeleting = false;
+            roleIdx = (roleIdx + 1) % typingRoles.length;
+            delay = 250;
+        }
+        setTimeout(typeEffect, delay);
+    }
+    typeEffect();
+
+    // --- WARP SPEED ---
+    const spaceBg = document.getElementById('spaceBg');
+    let lastScrollY = window.scrollY;
+    let lastScrollTime = Date.now();
+    let warpTimeout;
+    window.addEventListener('scroll', () => {
+        const now = Date.now();
+        const delta = now - lastScrollTime;
+        const scrollDelta = Math.abs(window.scrollY - lastScrollY);
+        if (delta < 100 && scrollDelta > 80) {
+            spaceBg.classList.add('warping');
+            clearTimeout(warpTimeout);
+            warpTimeout = setTimeout(() => spaceBg.classList.remove('warping'), 400);
+        }
+        lastScrollY = window.scrollY;
+        lastScrollTime = now;
+    }, { passive: true });
+
+} else if (isPC && prefersReduced) {
+    // PC tapi prefers-reduced-motion: hanya custom cursor dasar tanpa partikel/animasi
+    console.log('%c♿ PC mode (reduced motion): minimal features',
+        'background: #22c55e; color: white; padding: 4px 8px; border-radius: 4px;');
+    const typingEl = document.getElementById('typingText');
+    typingEl.textContent = 'Freelance Web Developer';
+}
+
+/* ============================================================
+   ============= FITUR KHUSUS MOBILE =============
+   Tidak dijalankan di PC
+============================================================ */
+if (isMobile) {
+    console.log('%c📱 Mobile mode: static text, no cursor, no particle',
+        'background: #60a5fa; color: white; padding: 4px 8px; border-radius: 4px;');
+
+    // Typing: ganti kata utuh tiap 3.5 detik (tanpa char-by-char)
+    const typingEl = document.getElementById('typingText');
+    const roles = ['Freelance Web Developer', 'Frontend Enthusiast', 'UI Designer', 'Problem Solver'];
+    let idx = 0;
+    typingEl.textContent = roles[0];
+    setInterval(() => {
+        idx = (idx + 1) % roles.length;
+        typingEl.textContent = roles[idx];
+    }, 3500);
+
+    // Cegah 300ms click delay (browser lama)
+    document.addEventListener('touchstart', () => {}, { passive: true });
+
+    // Optimasi: matikan semua sisa CSS animation yang tidak perlu
+    // (sudah via CSS body.pc-mode rules — di mobile animasi tidak jalan)
+}
+</script>
+</body>
+</html>
