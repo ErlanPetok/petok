@@ -82,8 +82,7 @@
         .page-content { position: relative; z-index: 1; }
 
         /* ============================================================
-           CUSTOM CURSOR — hanya tampil jika JS mendeteksi PC
-           (body.pc-mode)
+           CUSTOM CURSOR
         ============================================================ */
         .cursor-dot, .cursor-ring, .cursor-spotlight, .cursor-trail, .cursor-feature-toggle {
             display: none;
@@ -295,7 +294,6 @@
             opacity: 0.5;
         }
 
-        /* Animasi bintang hanya di PC */
         body.pc-mode .stars { animation: twinkle 4s infinite alternate; }
         body.pc-mode .stars2 { animation: twinkle 6s infinite alternate-reverse; }
         body.pc-mode .stars3 { animation: twinkle 8s infinite alternate; }
@@ -323,31 +321,30 @@
             50% { transform: translate(40px, 20px) scale(1.08); }
         }
 
-        .shooting-star {
+        /* REVISI v2: shooting star dibuat via JS, bukan CSS tetap */
+        .shooting-star-live {
             position: absolute;
             width: 2px; height: 2px;
             background: #fff;
             border-radius: 50%;
-            animation: shoot 8s linear infinite;
+            pointer-events: none;
             opacity: 0;
-            display: none;
         }
-        body.pc-mode .shooting-star { display: block; }
-        .shooting-star::after {
+        .shooting-star-live::after {
             content: '';
             position: absolute;
             top: 50%; right: 0;
-            width: 80px; height: 1px;
+            width: 100px; height: 1px;
             background: linear-gradient(90deg, transparent, #fff);
             transform: translateY(-50%);
         }
-        .shooting-star:nth-child(1) { top: 10%; left: 20%; }
-        .shooting-star:nth-child(2) { top: 40%; left: 60%; animation-delay: 4s; }
-        @keyframes shoot {
+        .shooting-star-live.animate {
+            animation: shootLive 1.2s ease-out forwards;
+        }
+        @keyframes shootLive {
             0% { transform: translate(0,0) rotate(45deg); opacity: 0; }
-            5% { opacity: 1; }
-            30% { transform: translate(250px, 250px) rotate(45deg); opacity: 0; }
-            100% { opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translate(350px, 350px) rotate(45deg); opacity: 0; }
         }
 
         a { text-decoration: none; color: inherit; }
@@ -359,7 +356,6 @@
             position: relative;
             background: transparent;
         }
-        /* content-visibility hanya di PC (bisa glitch di mobile lama) */
         body.pc-mode .section {
             contain: layout style;
             content-visibility: auto;
@@ -451,7 +447,7 @@
             50% { box-shadow: 0 0 35px var(--primary-glow); }
         }
         .logo span { color: var(--primary); }
-        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .nav-right { display: flex; align-items: center; gap: 10px; } /* REVISI v2: gap lebih kecil */
         .nav-links { display: flex; gap: 35px; }
         .nav-links a {
             font-weight: 500;
@@ -485,6 +481,86 @@
         .nav-icon-btn:hover { background: var(--primary); color: white; }
         .lang-toggle { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.75rem; }
         .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--heading); }
+
+        /* REVISI v2: wrapper untuk tombol grafis + panel */
+        .graphics-menu-wrap {
+            position: relative;
+            display: none; /* hanya tampil di PC */
+        }
+        body.pc-mode .graphics-menu-wrap { display: block; }
+
+        .graphics-menu-panel {
+            position: absolute;
+            top: 52px;
+            right: 0;
+            background: var(--bg-alt);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 15px;
+            min-width: 190px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1001;
+        }
+        .graphics-menu-panel.open { display: flex; }
+        .graphics-menu-panel h4 {
+            color: var(--heading);
+            font-size: 0.78rem;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 4px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .star-quality-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            color: var(--gray);
+            font-family: inherit;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .star-quality-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .star-quality-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .star-quality-btn i {
+            font-size: 0.7rem;
+            opacity: 0;
+        }
+        .star-quality-btn.active i { opacity: 1; }
+
+        /* Quality modes */
+        body.pc-mode .space-bg[data-quality="medium"] .stars,
+        body.pc-mode .space-bg[data-quality="medium"] .stars2,
+        body.pc-mode .space-bg[data-quality="medium"] .stars3 {
+            animation: none;
+        }
+        body.pc-mode .space-bg[data-quality="low"] .stars,
+        body.pc-mode .space-bg[data-quality="low"] .stars2,
+        body.pc-mode .space-bg[data-quality="low"] .stars3 {
+            animation: none;
+        }
+        body.pc-mode .space-bg[data-quality="low"] .nebula {
+            display: none;
+        }
+        body.pc-mode .space-bg[data-quality="low"].warping .stars {
+            animation: none;
+        }
 
         /* ===== HERO ===== */
         .hero {
@@ -594,7 +670,6 @@
             border: 2px solid var(--primary);
         }
         .btn-outline:hover { background: var(--primary); color: white; }
-        /* Hover effect hanya di PC */
         body.pc-mode .btn:hover { transform: translateY(-2px); }
 
         .hero-image {
@@ -614,7 +689,6 @@
         }
         [data-theme="light"] .hero-image img { border-color: white; }
 
-        /* Orbit ring hanya PC */
         body.pc-mode .hero-image::before,
         body.pc-mode .hero-image::after {
             content: '';
@@ -1214,7 +1288,7 @@
         body.pc-mode .reveal.fallback { opacity: 1 !important; transform: translateY(0) !important; }
 
         /* ============================================================
-           RESPONSIF — Layout mobile
+           RESPONSIF
         ============================================================ */
         @media (max-width: 992px) {
             .hero .container, .about-content, .contact-wrapper { grid-template-columns: 1fr; gap: 35px; }
@@ -1246,7 +1320,7 @@
             .typing-container { font-size: 1.05rem; }
             .section-title h2 { font-size: 1.8rem; }
             .about-info { grid-template-columns: 1fr; }
-            .nav-right { gap: 8px; }
+            .nav-right { gap: 6px; }
             .wave-divider { height: 40px; }
             .wave-divider svg { height: 40px; }
             .timeline::before { left: 15px; }
@@ -1258,6 +1332,7 @@
             .project-overlay { display: none; }
             .stats { padding: 40px 0; }
             .cursor-blink { display: none; }
+            .graphics-menu-wrap { display: none !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1271,10 +1346,9 @@
 </head>
 <body>
 
-<!-- ===== DETEKSI DEVICE PALING AWAL (blocking, jalan sebelum paint) ===== -->
+<!-- ===== DETEKSI DEVICE ===== -->
 <script>
 (function() {
-    // Deteksi device — dijalankan SINKRON sebelum render
     const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const isCoarse = window.matchMedia('(pointer: coarse)').matches;
     const isFine = window.matchMedia('(pointer: fine)').matches;
@@ -1284,40 +1358,15 @@
     const isLowEnd = navigator.deviceMemory && navigator.deviceMemory < 4;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Keputusan: HP = touch + pointer kasar, ATAU UA mobile, ATAU layar kecil
     const isMobile = (hasTouch && isCoarse) || isMobileUA || isSmall;
     const isPC = !isMobile && isFine;
 
-    // Expose global untuk dipakai di seluruh script
-    window.DEVICE = {
-        isMobile,
-        isPC,
-        isLowEnd,
-        isTouch: hasTouch,
-        prefersReduced
-    };
+    window.DEVICE = { isMobile, isPC, isLowEnd, isTouch: hasTouch, prefersReduced };
 
-    // Pasang class ke body SEKARANG (sebelum paint) agar tidak flicker
     document.documentElement.classList.add(isPC ? 'pc-detected' : 'mobile-detected');
     if (isPC) document.body.classList.add('pc-mode');
     else document.body.classList.add('mobile-device');
-
     if (isLowEnd) document.body.classList.add('low-end');
-
-    // Log untuk debug
-    console.log('%c🔍 Device Detection',
-        'background: #ee70db; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold;',
-        {
-            'Mode': isPC ? '🖥️ PC' : '📱 Mobile',
-            'Touch': hasTouch,
-            'Pointer': isCoarse ? 'coarse (finger)' : isFine ? 'fine (mouse)' : 'unknown',
-            'UA Mobile': isMobileUA,
-            'Screen Width': window.innerWidth,
-            'RAM': navigator.deviceMemory ? navigator.deviceMemory + 'GB' : 'unknown',
-            'Low-End': isLowEnd,
-            'Reduced Motion': prefersReduced
-        }
-    );
 })();
 </script>
 
@@ -1331,7 +1380,7 @@
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- LATAR ANGKASA -->
-<div class="space-bg" id="spaceBg">
+<div class="space-bg" id="spaceBg" data-quality="high">
     <div class="stars"></div>
     <div class="stars2"></div>
     <div class="stars3"></div>
@@ -1340,7 +1389,7 @@
 </div>
 <canvas id="particleCanvas"></canvas>
 
-<!-- CUSTOM CURSOR (hanya muncul jika body.pc-mode) -->
+<!-- CUSTOM CURSOR -->
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 <div class="cursor-spotlight" id="cursorSpotlight"></div>
@@ -1360,17 +1409,30 @@
             </a>
             <div class="nav-right">
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#home">Beranda</a></li>
-                    <li><a href="#about">Tentang</a></li>
-                    <li><a href="#skills">Keahlian</a></li>
-                    <li><a href="#timeline">Perjalanan</a></li>
-                    <li><a href="#projects">Proyek</a></li>
-                    <li><a href="#contact">Kontak</a></li>
+                    <!-- REVISI v2: tambah data-i18n -->
+                    <li><a href="#home" data-i18n="nav.home">Beranda</a></li>
+                    <li><a href="#about" data-i18n="nav.about">Tentang</a></li>
+                    <li><a href="#skills" data-i18n="nav.skills">Keahlian</a></li>
+                    <li><a href="#timeline" data-i18n="nav.timeline">Perjalanan</a></li>
+                    <li><a href="#projects" data-i18n="nav.projects">Proyek</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Kontak</a></li>
                 </ul>
                 <button class="nav-icon-btn lang-toggle" id="langToggle" aria-label="Ganti bahasa">EN</button>
                 <button class="nav-icon-btn" id="themeToggle" aria-label="Ganti tema">
                     <i class="fas fa-sun"></i>
                 </button>
+                <!-- REVISI v2: tombol pengaturan grafis di navbar -->
+                <div class="graphics-menu-wrap" id="graphicsMenuWrap">
+                    <button class="nav-icon-btn" id="graphicsToggle" aria-label="Pengaturan grafis">
+                        <i class="fas fa-sliders-h"></i>
+                    </button>
+                    <div class="graphics-menu-panel" id="graphicsPanel">
+                        <h4><i class="fas fa-star"></i> Star Quality</h4>
+                        <button class="star-quality-btn active" data-quality="high"><span>High</span><i class="fas fa-check"></i></button>
+                        <button class="star-quality-btn" data-quality="medium"><span>Medium</span><i class="fas fa-check"></i></button>
+                        <button class="star-quality-btn" data-quality="low"><span>Low</span><i class="fas fa-check"></i></button>
+                    </div>
+                </div>
                 <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
             </div>
         </nav>
@@ -1382,17 +1444,17 @@
         <div class="hero-content">
             <div class="status-badge">
                 <span class="status-dot"></span>
-                <span>Open to Freelance Projects</span>
+                <span data-i18n="hero.status">Open to Freelance Projects</span>
             </div>
-            <h1>Halo, Saya <span>Erlangga Juan Fadilah</span></h1>
+            <h1><span data-i18n="hero.greeting">Halo, Saya</span> <span>Erlangga Juan Fadilah</span></h1>
             <div class="typing-container">
                 <span id="typingText"></span><span class="cursor-blink"></span>
             </div>
-            <p class="motto">"Fresh graduate SMA, freelance web developer — building digital experiences from the cosmos 🌌"</p>
-            <p>Saya freelancer web developer muda (19 tahun) dari Bogor. Baru lulus SMA, tapi sudah bikin 10+ website untuk UMKM dan toko online.</p>
+            <p class="motto" data-i18n="hero.motto">"18 tahun, almost fresh graduate SMK — freelance web developer, building digital experiences from the cosmos 🌌"</p>
+            <p data-i18n="hero.desc">Saya freelancer web developer muda (18 tahun) dari Bogor. Hampir lulus SMK, tapi sudah bikin 10+ website untuk UMKM dan toko online.</p>
             <div class="btn-group">
-                <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Hubungi Saya</a>
-                <a href="#" id="downloadCv" class="btn btn-outline"><i class="fas fa-download"></i> Unduh CV</a>
+                <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> <span data-i18n="hero.contact">Hubungi Saya</span></a>
+                <a href="#" id="downloadCv" class="btn btn-outline"><i class="fas fa-download"></i> <span data-i18n="hero.download">Unduh CV</span></a>
             </div>
         </div>
         <div class="hero-image">
@@ -1407,22 +1469,22 @@
             <div class="stat-item">
                 <i class="fas fa-briefcase"></i>
                 <div class="stat-number"><span class="counter" data-target="1">0</span>+</div>
-                <div class="stat-label">Tahun Freelance</div>
+                <div class="stat-label" data-i18n="stats.years">Tahun Freelance</div>
             </div>
             <div class="stat-item">
                 <i class="fas fa-rocket"></i>
                 <div class="stat-number"><span class="counter" data-target="10">0</span>+</div>
-                <div class="stat-label">Proyek Selesai</div>
+                <div class="stat-label" data-i18n="stats.projects">Proyek Selesai</div>
             </div>
             <div class="stat-item">
                 <i class="fas fa-smile"></i>
                 <div class="stat-number"><span class="counter" data-target="8">0</span>+</div>
-                <div class="stat-label">Klien Puas</div>
+                <div class="stat-label" data-i18n="stats.clients">Klien Puas</div>
             </div>
             <div class="stat-item">
                 <i class="fas fa-code"></i>
                 <div class="stat-number"><span class="counter" data-target="6">0</span>+</div>
-                <div class="stat-label">Teknologi</div>
+                <div class="stat-label" data-i18n="stats.tech">Teknologi</div>
             </div>
         </div>
     </div>
@@ -1435,34 +1497,34 @@
 <section class="about section reveal" id="about">
     <div class="container">
         <div class="section-title">
-            <h2>Tentang Saya</h2>
-            <p>Kenali lebih dekat siapa saya</p>
+            <h2 data-i18n="about.title">Tentang Saya</h2>
+            <p data-i18n="about.subtitle">Kenali lebih dekat siapa saya</p>
         </div>
         <div class="about-content">
             <div class="about-image">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjtjBJyjXQgWYNt9izdgEBpu7B8J-BlduPEW_9fznJnQ&s=10" alt="Tentang Saya" loading="lazy" decoding="async">
             </div>
             <div class="about-text">
-                <h3>Freelance Web Developer — Fresh Graduate SMA</h3>
-                <p>Halo! Saya Erlangga, 19 tahun, fresh graduate SMA dari Bogor. Sejak lulus tahun 2024, saya memutuskan untuk langsung terjun ke dunia freelance web development. Saya belajar coding secara otodidak.</p>
-                <p>Sampai sekarang, saya sudah mengerjakan 10+ proyek website untuk UMKM, toko online kecil, dan teman-teman yang butuh website portofolio.</p>
+                <h3 data-i18n="about.role">Freelance Web Developer — Almost Fresh Graduate SMK</h3>
+                <p data-i18n="about.p1">Halo! Saya Erlangga, 18 tahun, siswa SMK dari Bogor yang sebentar lagi lulus. Sejak awal, saya memutuskan untuk langsung terjun ke dunia freelance web development. Saya belajar coding secara otodidak.</p>
+                <p data-i18n="about.p2">Sampai sekarang, saya sudah mengerjakan 10+ proyek website untuk UMKM, toko online kecil, dan teman-teman yang butuh website portofolio.</p>
                 <div class="about-info">
-                    <div class="about-info-item"><i class="fas fa-user"></i><span><strong>Nama:</strong> Erlangga Juan Fadilah</span></div>
-                    <div class="about-info-item"><i class="fas fa-birthday-cake"></i><span><strong>Usia:</strong> 19 tahun</span></div>
+                    <div class="about-info-item"><i class="fas fa-user"></i><span><strong data-i18n="about.nameLabel">Nama:</strong> Erlangga Juan Fadilah</span></div>
+                    <div class="about-info-item"><i class="fas fa-birthday-cake"></i><span><strong data-i18n="about.ageLabel">Usia:</strong> <span data-i18n="about.ageValue">18 tahun</span></span></div>
                     <div class="about-info-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <span>
-                            <strong>Lokasi:</strong>
+                            <strong data-i18n="about.locLabel">Lokasi:</strong>
                             <a href="https://www.google.com/maps/search/?api=1&query=Bogor%2C+Indonesia"
                                target="_blank" rel="noopener noreferrer"
                                class="location-link">
-                                Bogor, Indonesia <i class="fas fa-external-link-alt map-icon"></i>
+                                <span data-i18n="about.locValue">Bogor, Indonesia</span> <i class="fas fa-external-link-alt map-icon"></i>
                             </a>
                         </span>
                     </div>
-                    <div class="about-info-item"><i class="fas fa-graduation-cap"></i><span><strong>Pendidikan:</strong> SMA (2024)</span></div>
-                    <div class="about-info-item"><i class="fas fa-envelope"></i><span><strong>Email:</strong> erlanggajuanfadilah10@gmail.com</span></div>
-                    <div class="about-info-item"><i class="fas fa-briefcase"></i><span><strong>Freelance:</strong> Tersedia</span></div>
+                    <div class="about-info-item"><i class="fas fa-graduation-cap"></i><span><strong data-i18n="about.eduLabel">Pendidikan:</strong> <span data-i18n="about.eduValue">SMK (Almost Graduate)</span></span></div>
+                    <div class="about-info-item"><i class="fas fa-envelope"></i><span><strong data-i18n="about.emailLabel">Email:</strong> erlanggajuanfadilah10@gmail.com</span></div>
+                    <div class="about-info-item"><i class="fas fa-briefcase"></i><span><strong data-i18n="about.freelanceLabel">Freelance:</strong> <span data-i18n="about.freelanceValue">Tersedia</span></span></div>
                 </div>
                 <div class="fun-facts">
                     <div class="fun-fact">☕ 999+ kopi</div>
@@ -1478,8 +1540,8 @@
 <section class="skills section reveal" id="skills">
     <div class="container">
         <div class="section-title">
-            <h2>Keahlian</h2>
-            <p>Teknologi yang saya kuasai</p>
+            <h2 data-i18n="skills.title">Keahlian</h2>
+            <p data-i18n="skills.subtitle">Teknologi yang saya kuasai</p>
         </div>
         <div class="skills-grid">
             <div class="skill-card"><i class="fab fa-html5"></i><h3>HTML & CSS</h3><div class="skill-bar"><span data-width="90%"></span></div><div class="skill-percent">90%</div></div>
@@ -1495,40 +1557,40 @@
 <section class="timeline-section section reveal" id="timeline">
     <div class="container">
         <div class="section-title">
-            <h2>Perjalanan Saya</h2>
-            <p>Pendidikan, karir, dan pencapaian</p>
+            <h2 data-i18n="timeline.title">Perjalanan Saya</h2>
+            <p data-i18n="timeline.subtitle">Pendidikan, karir, dan pencapaian</p>
         </div>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-content">
-                    <div class="timeline-date">2025 - Sekarang</div>
-                    <h3>Freelance Web Developer</h3>
-                    <h4>Self-employed · Bogor</h4>
-                    <p>Fokus mengerjakan website untuk UMKM, toko online, dan portofolio pribadi.</p>
+                    <div class="timeline-date" data-i18n="timeline.t1date">2025 - Sekarang</div>
+                    <h3 data-i18n="timeline.t1title">Freelance Web Developer</h3>
+                    <h4 data-i18n="timeline.t1sub">Self-employed · Bogor</h4>
+                    <p data-i18n="timeline.t1desc">Fokus mengerjakan website untuk UMKM, toko online, dan portofolio pribadi.</p>
                 </div>
             </div>
             <div class="timeline-item">
                 <div class="timeline-content">
-                    <div class="timeline-date">2024</div>
-                    <h3>Mulai Belajar Web Development</h3>
-                    <h4>Otodidak · Online</h4>
-                    <p>Belajar HTML, CSS, JavaScript dari YouTube, freeCodeCamp, dan Dicoding.</p>
+                    <div class="timeline-date" data-i18n="timeline.t2date">2024</div>
+                    <h3 data-i18n="timeline.t2title">Mulai Belajar Web Development</h3>
+                    <h4 data-i18n="timeline.t2sub">Otodidak · Online</h4>
+                    <p data-i18n="timeline.t2desc">Belajar HTML, CSS, JavaScript dari YouTube, freeCodeCamp, dan Dicoding.</p>
                 </div>
             </div>
             <div class="timeline-item">
                 <div class="timeline-content">
-                    <div class="timeline-date">2021 - 2024</div>
-                    <h3>SMA (Jurusan IPS)</h3>
-                    <h4>SMA Negeri di Bogor</h4>
-                    <p>Aktif di ekstrakurikuler komputer. Mulai kenal coding di kelas 11.</p>
+                    <div class="timeline-date" data-i18n="timeline.t3date">2022 - 2025 (estimasi)</div>
+                    <h3 data-i18n="timeline.t3title">SMK (Jurusan TKJ/RPL)</h3>
+                    <h4 data-i18n="timeline.t3sub">SMK di Bogor</h4>
+                    <p data-i18n="timeline.t3desc">Aktif di ekstrakurikuler komputer. Mulai kenal coding di kelas 10.</p>
                 </div>
             </div>
             <div class="timeline-item">
                 <div class="timeline-content">
-                    <div class="timeline-date">2005</div>
-                    <h3>Lahir</h3>
-                    <h4>Bogor, Indonesia</h4>
-                    <p>Lahir dan besar di Bogor. Sekarang 19 tahun, siap berkarya.</p>
+                    <div class="timeline-date" data-i18n="timeline.t4date">2007</div>
+                    <h3 data-i18n="timeline.t4title">Lahir</h3>
+                    <h4 data-i18n="timeline.t4sub">Bogor, Indonesia</h4>
+                    <p data-i18n="timeline.t4desc">Lahir dan besar di Bogor. Sekarang 18 tahun, siap berkarya.</p>
                 </div>
             </div>
         </div>
@@ -1542,14 +1604,15 @@
 <section class="projects section reveal" id="projects">
     <div class="container">
         <div class="section-title">
-            <h2>Proyek Saya</h2>
-            <p>Beberapa proyek yang telah saya kerjakan</p>
+            <h2 data-i18n="projects.title">Proyek Saya</h2>
+            <p data-i18n="projects.subtitle">Beberapa proyek yang telah saya kerjakan</p>
         </div>
         <div class="project-filter">
-            <button class="filter-btn active" data-filter="all">Semua</button>
-            <button class="filter-btn" data-filter="web-design">Web Design</button>
-            <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
-            <button class="filter-btn" data-filter="dashboard">Dashboard</button>
+            <button class="filter-btn active" data-filter="all" data-i18n="projects.filterAll">Semua</button>
+            <button class="filter-btn" data-filter="web-design" data-i18n="projects.filterWeb">Web Design</button>
+            <button class="filter-btn" data-filter="ecommerce" data-i18n="projects.filterEcom">E-Commerce</button>
+            <button class="filter-btn" data-filter="dashboard" data-i18n="projects.filterDash">Dashboard</button>
+            <button class="filter-btn" data-filter="game" data-i18n="projects.filterGame">Game</button>
         </div>
         <div class="projects-grid">
             <div class="project-card" data-category="web-design"
@@ -1563,9 +1626,9 @@
                     <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="project-info">
-                    <span>Web Design</span>
+                    <span data-i18n="projects.catWeb">Web Design</span>
                     <h3>Website Toko Roti Lokal</h3>
-                    <p>Website company profile toko roti dengan galeri produk dan form pesanan WhatsApp.</p>
+                    <p data-i18n="projects.p1desc">Website company profile toko roti dengan galeri produk dan form pesanan WhatsApp.</p>
                 </div>
             </div>
             <div class="project-card" data-category="ecommerce"
@@ -1579,9 +1642,9 @@
                     <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="project-info">
-                    <span>E-Commerce</span>
+                    <span data-i18n="projects.catEcom">E-Commerce</span>
                     <h3>Toko Online Baju Preloved</h3>
-                    <p>E-commerce sederhana dengan keranjang belanja dan checkout via WhatsApp.</p>
+                    <p data-i18n="projects.p2desc">E-commerce sederhana dengan keranjang belanja dan checkout via WhatsApp.</p>
                 </div>
             </div>
             <div class="project-card" data-category="dashboard"
@@ -1595,9 +1658,43 @@
                     <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
                 </div>
                 <div class="project-info">
-                    <span>Dashboard</span>
+                    <span data-i18n="projects.catDash">Dashboard</span>
                     <h3>Dashboard Keuangan Pribadi</h3>
-                    <p>Aplikasi pencatat keuangan dengan grafik Chart.js dan localStorage.</p>
+                    <p data-i18n="projects.p3desc">Aplikasi pencatat keuangan dengan grafik Chart.js dan localStorage.</p>
+                </div>
+            </div>
+            <div class="project-card" data-category="dashboard"
+                 data-title="Wallet Tracker (Wallethingy)"
+                 data-desc="Aplikasi pelacak dompet digital untuk mencatat pemasukan dan pengeluaran. Dibangun dengan fokus pada pengalaman pengguna yang sederhana dan data yang tersimpan secara lokal."
+                 data-tags="HTML,CSS,JavaScript,LocalStorage"
+                 data-img="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop"
+                 data-demo="https://wallethingy.erlanpetok.web.id"
+                 data-github="https://github.com/ErlanPetok/Wallet-thingy">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop" alt="Wallet Tracker" loading="lazy" decoding="async">
+                    <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="project-info">
+                    <span data-i18n="projects.catDash">Dashboard</span>
+                    <h3>Wallet Tracker (Wallethingy)</h3>
+                    <p data-i18n="projects.p4desc">Aplikasi pelacak dompet digital dengan penyimpanan lokal dan antarmuka sederhana.</p>
+                </div>
+            </div>
+            <div class="project-card" data-category="game"
+                 data-title="Fishing Game"
+                 data-desc="Game memancing sederhana yang dibuat dengan HTML, CSS, dan JavaScript. Pemain dapat menangkap ikan dan mencetak skor. Proyek ini dibuat untuk melatih logika game dan interaksi DOM."
+                 data-tags="HTML,CSS,JavaScript,Game"
+                 data-img="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop"
+                 data-demo="https://erlanpetok.github.io/fishing-game/"
+                 data-github="https://github.com/ErlanPetok">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop" alt="Fishing Game" loading="lazy" decoding="async">
+                    <div class="project-overlay"><button class="open-modal"><i class="fas fa-eye"></i></button></div>
+                </div>
+                <div class="project-info">
+                    <span data-i18n="projects.catGame">Game</span>
+                    <h3>Fishing Game</h3>
+                    <p data-i18n="projects.p5desc">Game memancing interaktif dengan JavaScript, dibuat untuk latihan logika dan DOM.</p>
                 </div>
             </div>
         </div>
@@ -1607,40 +1704,40 @@
 <section class="certificates section reveal" id="certificates">
     <div class="container">
         <div class="section-title">
-            <h2>Sertifikat & Pencapaian</h2>
-            <p>Kredensial yang telah saya raih</p>
+            <h2 data-i18n="certs.title">Sertifikat & Pencapaian</h2>
+            <p data-i18n="certs.subtitle">Kredensial yang telah saya raih</p>
         </div>
         <div class="cert-grid">
             <div class="cert-card">
                 <div class="cert-img"><i class="fab fa-html5"></i></div>
                 <div class="cert-body">
-                    <h3>Belajar Dasar Web</h3>
-                    <p>Dicoding · 2024</p>
-                    <a href="#" class="cert-link">Verifikasi <i class="fas fa-arrow-right"></i></a>
+                    <h3 data-i18n="certs.c1title">Belajar Dasar Web</h3>
+                    <p data-i18n="certs.c1sub">Dicoding · 2024</p>
+                    <a href="#" class="cert-link"><span data-i18n="certs.verify">Verifikasi</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="cert-card">
                 <div class="cert-img"><i class="fab fa-js"></i></div>
                 <div class="cert-body">
-                    <h3>JavaScript Dasar</h3>
-                    <p>freeCodeCamp · 2024</p>
-                    <a href="#" class="cert-link">Verifikasi <i class="fas fa-arrow-right"></i></a>
+                    <h3 data-i18n="certs.c2title">JavaScript Dasar</h3>
+                    <p data-i18n="certs.c2sub">freeCodeCamp · 2024</p>
+                    <a href="#" class="cert-link"><span data-i18n="certs.verify">Verifikasi</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="cert-card">
                 <div class="cert-img"><i class="fab fa-react"></i></div>
                 <div class="cert-body">
-                    <h3>React Fundamental</h3>
-                    <p>Dicoding · 2025</p>
-                    <a href="#" class="cert-link">Verifikasi <i class="fas fa-arrow-right"></i></a>
+                    <h3 data-i18n="certs.c3title">React Fundamental</h3>
+                    <p data-i18n="certs.c3sub">Dicoding · 2025</p>
+                    <a href="#" class="cert-link"><span data-i18n="certs.verify">Verifikasi</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="cert-card">
                 <div class="cert-img"><i class="fas fa-award"></i></div>
                 <div class="cert-body">
-                    <h3>Top 10 Lomba Web Design</h3>
-                    <p>Tingkat Kota Bogor · 2023</p>
-                    <a href="#" class="cert-link">Lihat <i class="fas fa-arrow-right"></i></a>
+                    <h3 data-i18n="certs.c4title">Top 10 Lomba Web Design</h3>
+                    <p data-i18n="certs.c4sub">Tingkat Kota Bogor · 2023</p>
+                    <a href="#" class="cert-link"><span data-i18n="certs.view">Lihat</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -1650,8 +1747,8 @@
 <section class="testimonials section reveal" id="testimonials">
     <div class="container">
         <div class="section-title">
-            <h2>Testimoni Klien</h2>
-            <p>Apa kata mereka tentang saya</p>
+            <h2 data-i18n="testi.title">Testimoni Klien</h2>
+            <p data-i18n="testi.subtitle">Apa kata mereka tentang saya</p>
         </div>
         <div class="testimonial-slider">
             <button class="testimonial-arrow prev" id="testiPrev"><i class="fas fa-chevron-left"></i></button>
@@ -1660,23 +1757,23 @@
                 <div class="testimonial-item">
                     <img src="https://i.pravatar.cc/150?img=12" alt="Client" class="testimonial-avatar" loading="lazy" decoding="async">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"Meskipun masih muda, hasil kerjanya rapi dan cepat. Website toko roti saya jadi lebih modern!"</p>
+                    <p class="testimonial-text" data-i18n="testi.t1text">"Meskipun masih muda, hasil kerjanya rapi dan cepat. Website toko roti saya jadi lebih modern!"</p>
                     <div class="testimonial-author">Pak Budi</div>
-                    <div class="testimonial-role">Pemilik Toko Roti, Bogor</div>
+                    <div class="testimonial-role" data-i18n="testi.t1role">Pemilik Toko Roti, Bogor</div>
                 </div>
                 <div class="testimonial-item">
                     <img src="https://i.pravatar.cc/150?img=32" alt="Client" class="testimonial-avatar" loading="lazy" decoding="async">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"Awalnya ragu karena Erlan masih muda, tapi ternyata komunikasinya enak dan hasilnya memuaskan."</p>
+                    <p class="testimonial-text" data-i18n="testi.t2text">"Awalnya ragu karena Erlan masih muda, tapi ternyata komunikasinya enak dan hasilnya memuaskan."</p>
                     <div class="testimonial-author">Mbak Siti</div>
-                    <div class="testimonial-role">Owner Preloved Shop, Jakarta</div>
+                    <div class="testimonial-role" data-i18n="testi.t2role">Owner Preloved Shop, Jakarta</div>
                 </div>
                 <div class="testimonial-item">
                     <img src="https://i.pravatar.cc/150?img=45" alt="Client" class="testimonial-avatar" loading="lazy" decoding="async">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"Erlan bikin website portofolio untuk saya, hasilnya keren dan cepat selesai. Sukses terus!"</p>
+                    <p class="testimonial-text" data-i18n="testi.t3text">"Erlan bikin website portofolio untuk saya, hasilnya keren dan cepat selesai. Sukses terus!"</p>
                     <div class="testimonial-author">Rian</div>
-                    <div class="testimonial-role">Fotografer Freelance, Bogor</div>
+                    <div class="testimonial-role" data-i18n="testi.t3role">Fotografer Freelance, Bogor</div>
                 </div>
             </div>
             <div class="testimonial-nav" id="testiNav"></div>
@@ -1687,13 +1784,13 @@
 <section class="contact section reveal" id="contact">
     <div class="container">
         <div class="section-title">
-            <h2>Hubungi Saya</h2>
-            <p>Mari berkolaborasi untuk proyek Anda</p>
+            <h2 data-i18n="contact.title">Hubungi Saya</h2>
+            <p data-i18n="contact.subtitle">Mari berkolaborasi untuk proyek Anda</p>
         </div>
         <div class="contact-wrapper">
             <div class="contact-info">
-                <h3>Mari Bicara</h3>
-                <p>Punya ide proyek atau ingin bekerja sama? Saya fast response di WhatsApp!</p>
+                <h3 data-i18n="contact.heading">Mari Bicara</h3>
+                <p data-i18n="contact.desc">Punya ide proyek atau ingin bekerja sama? Saya fast response di WhatsApp!</p>
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
                     <span>erlanggajuanfadilah10@gmail.com</span>
@@ -1709,12 +1806,12 @@
                     <a href="https://www.google.com/maps/search/?api=1&query=Bogor%2C+Indonesia"
                        target="_blank" rel="noopener noreferrer"
                        class="location-link" style="color: #cbd5e1; font-size: 0.85rem;">
-                        Bogor, Indonesia <i class="fas fa-external-link-alt map-icon"></i>
+                        <span data-i18n="about.locValue">Bogor, Indonesia</span> <i class="fas fa-external-link-alt map-icon"></i>
                     </a>
                 </div>
 
                 <a href="https://wa.me/6285882362126?text=Halo%20Erlangga%2C%20saya%20tertarik%20bekerja%20sama%20untuk%20proyek%20website." target="_blank" class="wa-btn">
-                    <i class="fab fa-whatsapp" style="font-size:1.1rem"></i> Chat via WhatsApp
+                    <i class="fab fa-whatsapp" style="font-size:1.1rem"></i> <span data-i18n="contact.wa">Chat via WhatsApp</span>
                 </a>
 
                 <div class="social-links">
@@ -1726,19 +1823,19 @@
             </div>
             <form class="contact-form" id="contactForm">
                 <div class="form-group">
-                    <input type="text" name="name" placeholder="Nama Lengkap" required>
+                    <input type="text" name="name" placeholder="Nama Lengkap" data-i18n-placeholder="contact.namePh" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="Email Anda" required>
+                    <input type="email" name="email" placeholder="Email Anda" data-i18n-placeholder="contact.emailPh" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="subject" placeholder="Subjek">
+                    <input type="text" name="subject" placeholder="Subjek" data-i18n-placeholder="contact.subjectPh">
                 </div>
                 <div class="form-group">
-                    <textarea name="message" placeholder="Tulis pesan Anda..." required></textarea>
+                    <textarea name="message" placeholder="Tulis pesan Anda..." data-i18n-placeholder="contact.messagePh" required></textarea>
                 </div>
                 <div class="form-status" id="formStatus"></div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim Pesan</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> <span data-i18n="contact.send">Kirim Pesan</span></button>
             </form>
         </div>
     </div>
@@ -1749,9 +1846,9 @@
         <div class="footer-content">
             <div class="music-widget">
                 <div class="music-equalizer"><span></span><span></span><span></span><span></span></div>
-                <span>Now Playing: Lo-fi Space Beats 🌌</span>
+                <span data-i18n="footer.music">Now Playing: Lo-fi Space Beats 🌌</span>
             </div>
-            <div>&copy; 2025 <span>ErlanHoshi</span>. All Rights Reserved.</div>
+            <div>&copy; 2025 <span>ErlanHoshi</span>. <span data-i18n="footer.rights">All Rights Reserved.</span></div>
         </div>
     </div>
 </footer>
@@ -1771,7 +1868,7 @@
             <p id="modalDesc">Description</p>
             <div class="modal-tags" id="modalTags"></div>
             <div class="modal-actions">
-                <a href="#" id="modalDemo" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                <a href="#" id="modalDemo" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> <span data-i18n="modal.demo">Live Demo</span></a>
                 <a href="#" id="modalGithub" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
             </div>
         </div>
@@ -1780,18 +1877,164 @@
 
 <script>
 /* ============================================================
-   AMBIL DETEKSI DARI HEAD (sudah jalan sebelum paint)
+   AMBIL DETEKSI DARI HEAD
 ============================================================ */
 const { isMobile, isPC, isLowEnd, isTouch, prefersReduced } = window.DEVICE;
 
-console.log('%c🚀 Initializing ' + (isPC ? 'DESKTOP' : 'MOBILE') + ' features',
-    'background: #60a5fa; color: white; padding: 4px 8px; border-radius: 4px;');
+/* ============================================================
+   TRANSLATIONS (REVISI v2)
+============================================================ */
+const TRANSLATIONS = {
+    id: {
+        'nav.home': 'Beranda', 'nav.about': 'Tentang', 'nav.skills': 'Keahlian',
+        'nav.timeline': 'Perjalanan', 'nav.projects': 'Proyek', 'nav.contact': 'Kontak',
+        'hero.status': 'Open to Freelance Projects',
+        'hero.greeting': 'Halo, Saya',
+        'hero.motto': '"18 tahun, almost fresh graduate SMK — freelance web developer, building digital experiences from the cosmos 🌌"',
+        'hero.desc': 'Saya freelancer web developer muda (18 tahun) dari Bogor. Hampir lulus SMK, tapi sudah bikin 10+ website untuk UMKM dan toko online.',
+        'hero.contact': 'Hubungi Saya', 'hero.download': 'Unduh CV',
+        'stats.years': 'Tahun Freelance', 'stats.projects': 'Proyek Selesai',
+        'stats.clients': 'Klien Puas', 'stats.tech': 'Teknologi',
+        'about.title': 'Tentang Saya', 'about.subtitle': 'Kenali lebih dekat siapa saya',
+        'about.role': 'Freelance Web Developer — Almost Fresh Graduate SMK',
+        'about.p1': 'Halo! Saya Erlangga, 18 tahun, siswa SMK dari Bogor yang sebentar lagi lulus. Sejak awal, saya memutuskan untuk langsung terjun ke dunia freelance web development. Saya belajar coding secara otodidak.',
+        'about.p2': 'Sampai sekarang, saya sudah mengerjakan 10+ proyek website untuk UMKM, toko online kecil, dan teman-teman yang butuh website portofolio.',
+        'about.nameLabel': 'Nama:', 'about.ageLabel': 'Usia:', 'about.ageValue': '18 tahun',
+        'about.locLabel': 'Lokasi:', 'about.locValue': 'Bogor, Indonesia',
+        'about.eduLabel': 'Pendidikan:', 'about.eduValue': 'SMK (Almost Graduate)',
+        'about.emailLabel': 'Email:', 'about.freelanceLabel': 'Freelance:', 'about.freelanceValue': 'Tersedia',
+        'skills.title': 'Keahlian', 'skills.subtitle': 'Teknologi yang saya kuasai',
+        'timeline.title': 'Perjalanan Saya', 'timeline.subtitle': 'Pendidikan, karir, dan pencapaian',
+        'timeline.t1date': '2025 - Sekarang', 'timeline.t1title': 'Freelance Web Developer',
+        'timeline.t1sub': 'Self-employed · Bogor',
+        'timeline.t1desc': 'Fokus mengerjakan website untuk UMKM, toko online, dan portofolio pribadi.',
+        'timeline.t2date': '2024', 'timeline.t2title': 'Mulai Belajar Web Development',
+        'timeline.t2sub': 'Otodidak · Online',
+        'timeline.t2desc': 'Belajar HTML, CSS, JavaScript dari YouTube, freeCodeCamp, dan Dicoding.',
+        'timeline.t3date': '2022 - 2025 (estimasi)', 'timeline.t3title': 'SMK (Jurusan TKJ/RPL)',
+        'timeline.t3sub': 'SMK di Bogor',
+        'timeline.t3desc': 'Aktif di ekstrakurikuler komputer. Mulai kenal coding di kelas 10.',
+        'timeline.t4date': '2007', 'timeline.t4title': 'Lahir', 'timeline.t4sub': 'Bogor, Indonesia',
+        'timeline.t4desc': 'Lahir dan besar di Bogor. Sekarang 18 tahun, siap berkarya.',
+        'projects.title': 'Proyek Saya', 'projects.subtitle': 'Beberapa proyek yang telah saya kerjakan',
+        'projects.filterAll': 'Semua', 'projects.filterWeb': 'Web Design',
+        'projects.filterEcom': 'E-Commerce', 'projects.filterDash': 'Dashboard', 'projects.filterGame': 'Game',
+        'projects.catWeb': 'Web Design', 'projects.catEcom': 'E-Commerce',
+        'projects.catDash': 'Dashboard', 'projects.catGame': 'Game',
+        'projects.p1desc': 'Website company profile toko roti dengan galeri produk dan form pesanan WhatsApp.',
+        'projects.p2desc': 'E-commerce sederhana dengan keranjang belanja dan checkout via WhatsApp.',
+        'projects.p3desc': 'Aplikasi pencatat keuangan dengan grafik Chart.js dan localStorage.',
+        'projects.p4desc': 'Aplikasi pelacak dompet digital dengan penyimpanan lokal dan antarmuka sederhana.',
+        'projects.p5desc': 'Game memancing interaktif dengan JavaScript, dibuat untuk latihan logika dan DOM.',
+        'certs.title': 'Sertifikat & Pencapaian', 'certs.subtitle': 'Kredensial yang telah saya raih',
+        'certs.c1title': 'Belajar Dasar Web', 'certs.c1sub': 'Dicoding · 2024',
+        'certs.c2title': 'JavaScript Dasar', 'certs.c2sub': 'freeCodeCamp · 2024',
+        'certs.c3title': 'React Fundamental', 'certs.c3sub': 'Dicoding · 2025',
+        'certs.c4title': 'Top 10 Lomba Web Design', 'certs.c4sub': 'Tingkat Kota Bogor · 2023',
+        'certs.verify': 'Verifikasi', 'certs.view': 'Lihat',
+        'testi.title': 'Testimoni Klien', 'testi.subtitle': 'Apa kata mereka tentang saya',
+        'testi.t1text': '"Meskipun masih muda, hasil kerjanya rapi dan cepat. Website toko roti saya jadi lebih modern!"',
+        'testi.t1role': 'Pemilik Toko Roti, Bogor',
+        'testi.t2text': '"Awalnya ragu karena Erlan masih muda, tapi ternyata komunikasinya enak dan hasilnya memuaskan."',
+        'testi.t2role': 'Owner Preloved Shop, Jakarta',
+        'testi.t3text': '"Erlan bikin website portofolio untuk saya, hasilnya keren dan cepat selesai. Sukses terus!"',
+        'testi.t3role': 'Fotografer Freelance, Bogor',
+        'contact.title': 'Hubungi Saya', 'contact.subtitle': 'Mari berkolaborasi untuk proyek Anda',
+        'contact.heading': 'Mari Bicara',
+        'contact.desc': 'Punya ide proyek atau ingin bekerja sama? Saya fast response di WhatsApp!',
+        'contact.wa': 'Chat via WhatsApp', 'contact.namePh': 'Nama Lengkap',
+        'contact.emailPh': 'Email Anda', 'contact.subjectPh': 'Subjek',
+        'contact.messagePh': 'Tulis pesan Anda...', 'contact.send': 'Kirim Pesan',
+        'footer.music': 'Now Playing: Lo-fi Space Beats 🌌', 'footer.rights': 'All Rights Reserved.',
+        'modal.demo': 'Live Demo'
+    },
+    en: {
+        'nav.home': 'Home', 'nav.about': 'About', 'nav.skills': 'Skills',
+        'nav.timeline': 'Journey', 'nav.projects': 'Projects', 'nav.contact': 'Contact',
+        'hero.status': 'Open to Freelance Projects',
+        'hero.greeting': 'Hello, I am',
+        'hero.motto': '"18 years old, almost fresh graduate of SMK — freelance web developer, building digital experiences from the cosmos 🌌"',
+        'hero.desc': 'I am a young freelance web developer (18 years old) from Bogor. Almost graduated from SMK, but already built 10+ websites for small businesses and online stores.',
+        'hero.contact': 'Contact Me', 'hero.download': 'Download CV',
+        'stats.years': 'Years Freelancing', 'stats.projects': 'Projects Done',
+        'stats.clients': 'Happy Clients', 'stats.tech': 'Technologies',
+        'about.title': 'About Me', 'about.subtitle': 'Get to know me better',
+        'about.role': 'Freelance Web Developer — Almost Fresh Graduate of SMK',
+        'about.p1': 'Hi! I am Erlangga, 18 years old, a SMK student from Bogor who will graduate soon. From the start, I decided to dive into freelance web development. I learned coding autodidactically.',
+        'about.p2': 'Until now, I have worked on 10+ website projects for small businesses, small online stores, and friends who need portfolio websites.',
+        'about.nameLabel': 'Name:', 'about.ageLabel': 'Age:', 'about.ageValue': '18 years old',
+        'about.locLabel': 'Location:', 'about.locValue': 'Bogor, Indonesia',
+        'about.eduLabel': 'Education:', 'about.eduValue': 'SMK (Almost Graduate)',
+        'about.emailLabel': 'Email:', 'about.freelanceLabel': 'Freelance:', 'about.freelanceValue': 'Available',
+        'skills.title': 'Skills', 'skills.subtitle': 'Technologies I master',
+        'timeline.title': 'My Journey', 'timeline.subtitle': 'Education, career, and achievements',
+        'timeline.t1date': '2025 - Present', 'timeline.t1title': 'Freelance Web Developer',
+        'timeline.t1sub': 'Self-employed · Bogor',
+        'timeline.t1desc': 'Focused on building websites for small businesses, online stores, and personal portfolios.',
+        'timeline.t2date': '2024', 'timeline.t2title': 'Started Learning Web Development',
+        'timeline.t2sub': 'Self-taught · Online',
+        'timeline.t2desc': 'Learned HTML, CSS, JavaScript from YouTube, freeCodeCamp, and Dicoding.',
+        'timeline.t3date': '2022 - 2025 (estimated)', 'timeline.t3title': 'SMK (TKJ/RPL Major)',
+        'timeline.t3sub': 'SMK in Bogor',
+        'timeline.t3desc': 'Active in computer extracurricular. Started coding in 10th grade.',
+        'timeline.t4date': '2007', 'timeline.t4title': 'Born', 'timeline.t4sub': 'Bogor, Indonesia',
+        'timeline.t4desc': 'Born and raised in Bogor. Now 18 years old, ready to create.',
+        'projects.title': 'My Projects', 'projects.subtitle': 'Some projects I have worked on',
+        'projects.filterAll': 'All', 'projects.filterWeb': 'Web Design',
+        'projects.filterEcom': 'E-Commerce', 'projects.filterDash': 'Dashboard', 'projects.filterGame': 'Game',
+        'projects.catWeb': 'Web Design', 'projects.catEcom': 'E-Commerce',
+        'projects.catDash': 'Dashboard', 'projects.catGame': 'Game',
+        'projects.p1desc': 'Company profile website for a bakery with product gallery and WhatsApp order form.',
+        'projects.p2desc': 'Simple e-commerce with shopping cart and WhatsApp checkout.',
+        'projects.p3desc': 'Personal finance tracker app with Chart.js chart and localStorage.',
+        'projects.p4desc': 'Digital wallet tracker app with local storage and simple interface.',
+        'projects.p5desc': 'Interactive fishing game built with JavaScript, made to practice logic and DOM.',
+        'certs.title': 'Certificates & Achievements', 'certs.subtitle': 'Credentials I have earned',
+        'certs.c1title': 'Web Basics', 'certs.c1sub': 'Dicoding · 2024',
+        'certs.c2title': 'JavaScript Basics', 'certs.c2sub': 'freeCodeCamp · 2024',
+        'certs.c3title': 'React Fundamentals', 'certs.c3sub': 'Dicoding · 2025',
+        'certs.c4title': 'Top 10 Web Design Contest', 'certs.c4sub': 'Bogor City Level · 2023',
+        'certs.verify': 'Verify', 'certs.view': 'View',
+        'testi.title': 'Client Testimonials', 'testi.subtitle': 'What they say about me',
+        'testi.t1text': '"Even though still young, the work is neat and fast. My bakery website became more modern!"',
+        'testi.t1role': 'Bakery Owner, Bogor',
+        'testi.t2text': '"Initially doubted because Erlan is young, but it turns out communication is smooth and the result is satisfying."',
+        'testi.t2role': 'Preloved Shop Owner, Jakarta',
+        'testi.t3text': '"Erlan built a portfolio website for me, the result is cool and finished quickly. Keep succeeding!"',
+        'testi.t3role': 'Freelance Photographer, Bogor',
+        'contact.title': 'Contact Me', 'contact.subtitle': "Let's collaborate on your project",
+        'contact.heading': "Let's Talk",
+        'contact.desc': 'Have a project idea or want to work together? I am fast to respond on WhatsApp!',
+        'contact.wa': 'Chat via WhatsApp', 'contact.namePh': 'Full Name',
+        'contact.emailPh': 'Your Email', 'contact.subjectPh': 'Subject',
+        'contact.messagePh': 'Write your message...', 'contact.send': 'Send Message',
+        'footer.music': 'Now Playing: Lo-fi Space Beats 🌌', 'footer.rights': 'All Rights Reserved.',
+        'modal.demo': 'Live Demo'
+    }
+};
+
+let currentLang = localStorage.getItem('lang') || 'id';
+
+function applyLanguage(lang) {
+    const dict = TRANSLATIONS[lang];
+    if (!dict) return;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.dataset.i18nPlaceholder;
+        if (dict[key] !== undefined) el.placeholder = dict[key];
+    });
+    document.documentElement.lang = lang;
+}
+
+// Terapkan saat load
+applyLanguage(currentLang);
 
 /* ============================================================
-   FUNGSI-FUNGSI UMUM (dipakai di kedua mode)
+   FUNGSI-FUNGSI UMUM
 ============================================================ */
-
-// Loading screen
 window.addEventListener('load', () => {
     setTimeout(() => document.getElementById('loader').classList.add('hidden'), 900);
 });
@@ -1800,7 +2043,6 @@ setTimeout(() => {
     if (loader && !loader.classList.contains('hidden')) loader.classList.add('hidden');
 }, 2500);
 
-// Theme toggle
 const htmlEl = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = themeToggle.querySelector('i');
@@ -1814,6 +2056,17 @@ function setTheme(theme) {
 setTheme(savedTheme);
 themeToggle.addEventListener('click', () => {
     setTheme(htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// REVISI v2: Language toggle yang benar-benar berfungsi
+const langToggle = document.getElementById('langToggle');
+langToggle.textContent = currentLang === 'id' ? 'EN' : 'ID';
+langToggle.addEventListener('click', () => {
+    currentLang = currentLang === 'id' ? 'en' : 'id';
+    localStorage.setItem('lang', currentLang);
+    langToggle.textContent = currentLang === 'id' ? 'EN' : 'ID';
+    applyLanguage(currentLang);
+    showToast(currentLang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
 });
 
 // Menu mobile
@@ -1834,7 +2087,22 @@ navLinks.querySelectorAll('a').forEach(link => {
     });
 });
 
-// Scroll progress + back-to-top + active nav — throttled
+// REVISI v2: Graphics menu toggle (navbar)
+const graphicsToggle = document.getElementById('graphicsToggle');
+const graphicsPanel = document.getElementById('graphicsPanel');
+const graphicsMenuWrap = document.getElementById('graphicsMenuWrap');
+
+graphicsToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    graphicsPanel.classList.toggle('open');
+});
+document.addEventListener('click', (e) => {
+    if (!graphicsMenuWrap.contains(e.target)) {
+        graphicsPanel.classList.remove('open');
+    }
+});
+
+// Scroll progress
 const scrollProgress = document.getElementById('scrollProgress');
 const backToTop = document.getElementById('backToTop');
 const sections = document.querySelectorAll('section[id]');
@@ -1865,7 +2133,6 @@ window.addEventListener('scroll', () => {
 
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// Copy + toast
 const toast = document.getElementById('toast');
 function showToast(msg) {
     toast.textContent = msg;
@@ -1918,7 +2185,6 @@ function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
 }
-// PC: tombol mata | Mobile: klik card langsung
 if (isPC) {
     document.querySelectorAll('.open-modal').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -1954,7 +2220,6 @@ function goTesti(idx) {
 document.getElementById('testiPrev').addEventListener('click', () => goTesti(testiIdx - 1));
 document.getElementById('testiNext').addEventListener('click', () => goTesti(testiIdx + 1));
 
-// Autoplay testimoni HANYA di PC
 if (isPC) {
     let testiTimer = setInterval(() => goTesti(testiIdx + 1), 6000);
     document.addEventListener('visibilitychange', () => {
@@ -1970,7 +2235,7 @@ contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const btn = contactForm.querySelector('button[type="submit"]');
     const originalHTML = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...';
     btn.disabled = true;
     setTimeout(() => {
         formStatus.className = 'form-status success';
@@ -1982,13 +2247,12 @@ contactForm.addEventListener('submit', (e) => {
     }, 1200);
 });
 
-// Download CV
 document.getElementById('downloadCv').addEventListener('click', (e) => {
     e.preventDefault();
     showToast('📄 CV akan segera diunduh...');
 });
 
-// Counter — animasi hanya di PC
+// Counter
 const counterEls = document.querySelectorAll('.counter');
 if (isPC && 'IntersectionObserver' in window) {
     const counterObserver = new IntersectionObserver((entries) => {
@@ -2009,11 +2273,10 @@ if (isPC && 'IntersectionObserver' in window) {
     }, { threshold: 0.5 });
     counterEls.forEach(c => counterObserver.observe(c));
 } else {
-    // Mobile: langsung tampil angka
     counterEls.forEach(c => { c.textContent = c.dataset.target; });
 }
 
-// Skill bar — animasi hanya PC
+// Skill bar
 const skillBars = document.querySelectorAll('.skill-bar span');
 if (isPC && 'IntersectionObserver' in window) {
     const skillObserver = new IntersectionObserver((entries) => {
@@ -2026,11 +2289,10 @@ if (isPC && 'IntersectionObserver' in window) {
     }, { threshold: 0.3 });
     skillBars.forEach(bar => skillObserver.observe(bar));
 } else {
-    // Mobile: langsung set
     skillBars.forEach(bar => { bar.style.width = bar.dataset.width; });
 }
 
-// Reveal — animasi hanya PC
+// Reveal
 if (isPC && 'IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -2047,28 +2309,73 @@ if (isPC && 'IntersectionObserver' in window) {
         });
     }, 1500);
 } else {
-    // Mobile: langsung tampil semua
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
 }
 
-// Language toggle (sederhana)
-const langToggle = document.getElementById('langToggle');
-let currentLang = localStorage.getItem('lang') || 'id';
-langToggle.textContent = currentLang === 'id' ? 'EN' : 'ID';
-langToggle.addEventListener('click', () => {
-    currentLang = currentLang === 'id' ? 'en' : 'id';
-    localStorage.setItem('lang', currentLang);
-    langToggle.textContent = currentLang === 'id' ? 'EN' : 'ID';
-    showToast(currentLang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
-});
-
 /* ============================================================
-   ============= FITUR KHUSUS PC =============
-   Tidak dijalankan sama sekali di HP
+   FITUR KHUSUS PC
 ============================================================ */
 if (isPC && !prefersReduced) {
-    console.log('%c✨ PC mode: custom cursor + particle + typing + warp',
-        'background: #ee70db; color: white; padding: 4px 8px; border-radius: 4px;');
+
+    // --- STAR QUALITY SETTINGS ---
+    const spaceBg = document.getElementById('spaceBg');
+    const qualityBtns = document.querySelectorAll('.star-quality-btn');
+    let currentQuality = localStorage.getItem('starQuality') || 'high';
+
+    function setStarQuality(quality) {
+        spaceBg.setAttribute('data-quality', quality);
+        localStorage.setItem('starQuality', quality);
+        qualityBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.quality === quality);
+        });
+        // REVISI v2: reset shooting star spawner sesuai kualitas
+        if (window._shootingStarTimer) clearTimeout(window._shootingStarTimer);
+        scheduleShootingStar();
+    }
+
+    qualityBtns.forEach(btn => {
+        btn.addEventListener('click', () => setStarQuality(btn.dataset.quality));
+    });
+    setStarQuality(currentQuality);
+
+    // REVISI v2: SHOOTING STAR REAL-TIME
+    // Bintang jatuh muncul acak di posisi acak, terus-menerus (bukan animasi CSS repeat)
+    function spawnShootingStar() {
+        if (spaceBg.getAttribute('data-quality') === 'low') return;
+        const star = document.createElement('div');
+        star.className = 'shooting-star-live';
+        // posisi start acak di area atas/kiri
+        const startX = Math.random() * (window.innerWidth * 0.7);
+        const startY = Math.random() * (window.innerHeight * 0.5);
+        star.style.left = startX + 'px';
+        star.style.top = startY + 'px';
+        // durasi acak
+        const dur = 0.8 + Math.random() * 0.8;
+        star.style.animationDuration = dur + 's';
+        spaceBg.appendChild(star);
+        // trigger animasi
+        requestAnimationFrame(() => {
+            star.classList.add('animate');
+        });
+        // hapus setelah selesai
+        setTimeout(() => {
+            if (star.parentNode) star.parentNode.removeChild(star);
+        }, dur * 1000 + 200);
+    }
+
+    function scheduleShootingStar() {
+        const q = spaceBg.getAttribute('data-quality');
+        if (q === 'low') return;
+        // High: sering (1.5-4 detik), Medium: jarang (5-12 detik)
+        const minDelay = q === 'high' ? 1500 : 5000;
+        const maxDelay = q === 'high' ? 4000 : 12000;
+        const delay = minDelay + Math.random() * (maxDelay - minDelay);
+        window._shootingStarTimer = setTimeout(() => {
+            spawnShootingStar();
+            scheduleShootingStar();
+        }, delay);
+    }
+    scheduleShootingStar();
 
     // --- CUSTOM CURSOR ---
     const cursorDot = document.getElementById('cursorDot');
@@ -2079,7 +2386,6 @@ if (isPC && !prefersReduced) {
     let ringX = 0, ringY = 0, spotX = 0, spotY = 0;
     let highlightEnabled = localStorage.getItem('cursorHighlight') !== 'off';
 
-    // Trail dots
     const trailDots = [];
     for (let i = 0; i < 4; i++) {
         const dot = document.createElement('div');
@@ -2130,7 +2436,6 @@ if (isPC && !prefersReduced) {
         el.addEventListener('mouseleave', () => cursorRing.classList.remove('on-image'));
     });
 
-    // Text highlight
     document.querySelectorAll('h1, h2, h3, h4, .hero-content h1 span, .motto, .about-text p, .section-title h2, .stat-number, .logo, .testimonial-author, .testimonial-text').forEach(el => {
         if (!el.querySelector('div, p, ul, section')) el.classList.add('cursor-highlight');
     });
@@ -2251,7 +2556,7 @@ if (isPC && !prefersReduced) {
         });
     }
 
-    // --- TYPING EFFECT (char-by-char) ---
+    // --- TYPING EFFECT ---
     const typingRoles = ['Freelance Web Developer', 'Frontend Enthusiast', 'UI Designer Pemula', 'Problem Solver'];
     const typingEl = document.getElementById('typingText');
     let roleIdx = 0, charIdx = 0, isDeleting = false;
@@ -2277,12 +2582,12 @@ if (isPC && !prefersReduced) {
     }
     typeEffect();
 
-    // --- WARP SPEED ---
-    const spaceBg = document.getElementById('spaceBg');
+    // --- WARP SPEED (hanya quality high) ---
     let lastScrollY = window.scrollY;
     let lastScrollTime = Date.now();
     let warpTimeout;
     window.addEventListener('scroll', () => {
+        if (spaceBg.getAttribute('data-quality') !== 'high') return;
         const now = Date.now();
         const delta = now - lastScrollTime;
         const scrollDelta = Math.abs(window.scrollY - lastScrollY);
@@ -2296,22 +2601,14 @@ if (isPC && !prefersReduced) {
     }, { passive: true });
 
 } else if (isPC && prefersReduced) {
-    // PC tapi prefers-reduced-motion: hanya custom cursor dasar tanpa partikel/animasi
-    console.log('%c♿ PC mode (reduced motion): minimal features',
-        'background: #22c55e; color: white; padding: 4px 8px; border-radius: 4px;');
     const typingEl = document.getElementById('typingText');
     typingEl.textContent = 'Freelance Web Developer';
 }
 
 /* ============================================================
-   ============= FITUR KHUSUS MOBILE =============
-   Tidak dijalankan di PC
+   FITUR KHUSUS MOBILE
 ============================================================ */
 if (isMobile) {
-    console.log('%c📱 Mobile mode: static text, no cursor, no particle',
-        'background: #60a5fa; color: white; padding: 4px 8px; border-radius: 4px;');
-
-    // Typing: ganti kata utuh tiap 3.5 detik (tanpa char-by-char)
     const typingEl = document.getElementById('typingText');
     const roles = ['Freelance Web Developer', 'Frontend Enthusiast', 'UI Designer', 'Problem Solver'];
     let idx = 0;
@@ -2321,11 +2618,7 @@ if (isMobile) {
         typingEl.textContent = roles[idx];
     }, 3500);
 
-    // Cegah 300ms click delay (browser lama)
     document.addEventListener('touchstart', () => {}, { passive: true });
-
-    // Optimasi: matikan semua sisa CSS animation yang tidak perlu
-    // (sudah via CSS body.pc-mode rules — di mobile animasi tidak jalan)
 }
 </script>
 </body>
