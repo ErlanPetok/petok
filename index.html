@@ -230,6 +230,8 @@
         .intro-btn:hover { background: rgba(238,112,219,.35); border-color: #ee70db; transform: translateY(-2px); }
         .intro-btn:active { transform: scale(.94); }
         .intro-btn.on { background: #ee70db; border-color: #ee70db; }
+        #introMusic:not(.on) { animation: introPulse 2.2s ease-out 1.8s infinite; }
+        @keyframes introPulse { 0% { box-shadow: 0 0 0 0 rgba(238,112,219,.55); } 70%, 100% { box-shadow: 0 0 0 14px rgba(238,112,219,0); } }
         .intro-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
         .intro-flash { position: absolute; inset: 0; pointer-events: none; opacity: 0;
             background: radial-gradient(circle at 50% 50%, #fff 0, rgba(255,214,248,.95) 18%, rgba(130,170,255,.55) 48%, transparent 76%); }
@@ -4019,7 +4021,7 @@ if (isMobile) {
         window.__musicRequest = request;
         const toggle = () => {
             if (failed) { failed = false; api = 'idle'; ready = false; player = null; $('#mdVideo').innerHTML = '<div id="mdPlayer"></div>'; }
-            if (playing) { want = false; try { player.pauseVideo(); } catch (_) {} } else request();
+            if (playing) { want = false; ls.set('musicPref', 'off'); try { player.pauseVideo(); } catch (_) {} } else { ls.set('musicPref', 'on'); request(); }
         };
         btn.addEventListener('click', toggle);
         if (footer) { footer.addEventListener('click', toggle); footer.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } }); }
@@ -4029,6 +4031,20 @@ if (isMobile) {
         dock.addEventListener('pointerenter', () => { if (api === 'idle') loadApi(); }, { once: true });
         dock.addEventListener('focusin', () => { if (api === 'idle') loadApi(); }, { once: true });
         onLang(ui); ui();
+
+        // "Autoplay": browsers only allow sound after a gesture, so the visitor's first tap / click / key
+        // anywhere starts the music. If they ever pause it, we remember and never auto-start again.
+        if (!isFile && ls.get('musicPref') !== 'off') {
+            const EVS = ['pointerup', 'keydown'];
+            const disarm = () => EVS.forEach(t => document.removeEventListener(t, first, true));
+            function first(e) {
+                if (e.type === 'keydown' && e.key === 'Escape') return;            // Esc is not a real gesture
+                disarm();
+                if (e.target && e.target.closest && e.target.closest('#musicDock, .music-widget, #introMusic')) return;  // those handle themselves
+                if (!playing && !want && ls.get('musicPref') !== 'off') request();
+            }
+            EVS.forEach(t => document.addEventListener(t, first, true));
+        }
     });
 
     /* ---------- 6. MAGNETIC BUTTONS ---------- */
